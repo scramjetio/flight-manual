@@ -1,0 +1,6 @@
+# Default owners for all files
+*       @scramjetio/core
+
+# Specific overrides
+*.md    @scramjetio/docs
+.github/workflows/ @scramjetio/infra

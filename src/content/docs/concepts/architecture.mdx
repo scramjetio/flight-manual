@@ -1,0 +1,91 @@
+---
+title: Architecture
+description: How docs-starter is built and the technology choices behind it.
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+## Overview
+
+**docs-starter** is an opinionated documentation toolkit built on battle-tested open-source components. It provides Mintlify-level features at zero cost.
+
+## Technology Stack
+
+<CardGrid>
+  <Card title="Astro Starlight" icon="astro">
+    Static site generator optimized for documentation. Markdown/MDX content, automatic navigation, built-in search.
+  </Card>
+  <Card title="Scalar" icon="rocket">
+    Interactive API reference and playground. Renders beautiful, try-it-live API docs from any OpenAPI specification.
+  </Card>
+  <Card title="Pagefind" icon="magnifier">
+    Client-side full-text search. Indexes your content at build time. Zero server infrastructure needed.
+  </Card>
+  <Card title="Cloudflare Pages" icon="cloud">
+    Global edge deployment. Free tier includes unlimited bandwidth, custom domains, and preview deployments.
+  </Card>
+</CardGrid>
+
+## How It Works
+
+```
+┌─────────────────┐     ┌──────────────┐     ┌─────────────────┐
+│   MDX Content   │────▶│  Astro Build │────▶│  Static HTML    │
+│   + OpenAPI     │     │  + Starlight │     │  + Pagefind     │
+│   + CSS         │     │  + llms-txt  │     │  + llms.txt     │
+└─────────────────┘     └──────────────┘     └─────────────────┘
+                                                     │
+                                                     ▼
+                                              ┌─────────────┐
+                                              │  Cloudflare  │
+                                              │    Pages     │
+                                              └─────────────┘
+```
+
+### Build Pipeline
+
+1. **Content** — You write MDX files in `src/content/docs/`
+2. **OpenAPI** — Drop your spec into `public/openapi.json`
+3. **Build** — Astro compiles everything to static HTML
+4. **Search** — Pagefind indexes all pages automatically
+5. **AI-Ready** — `llms-txt` integration generates `/llms.txt` and `/llms-full.txt`
+6. **Deploy** — Push to GitHub → Cloudflare Pages auto-deploys
+
+### Feature Architecture
+
+| Feature | Component | How It Works |
+|---|---|---|
+| Search | Pagefind | Client-side index built at compile time |
+| API Playground | Scalar | React component embedded in MDX |
+| AI Readability | llms-txt integration | Post-build hook generates markdown files |
+| Analytics | CF Web Analytics | Script tag injected via Astro integration |
+| Styling | Custom CSS + Inter font | CSS variables for easy brand customization |
+
+## Extending
+
+### Adding Custom Components
+
+Create Astro components in `src/components/` and import them in your MDX:
+
+```astro
+---
+// src/components/StatusBadge.astro
+const { status } = Astro.props;
+const color = status === 'active' ? 'green' : 'gray';
+---
+<span class={`badge badge-${color}`}>{status}</span>
+```
+
+```mdx
+---
+title: My Page
+---
+import StatusBadge from '../../components/StatusBadge.astro';
+
+The service is currently <StatusBadge status="active" />.
+```
+
+### Custom Integrations
+
+Add Astro integrations to `integrations/` and register them in `astro.config.mjs`.
+See `integrations/llms-txt.js` and `integrations/analytics.js` for examples.

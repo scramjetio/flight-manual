@@ -1,0 +1,36 @@
+---
+title: "F-22 Raptor Flight Manual"
+description: "Comprehensive technical documentation for the Lockheed Martin F-22 Raptor air superiority fighter."
+template: splash
+hero:
+  tagline: "Air Dominance. Uncompromised."
+  image:
+    file: ../../../assets/hero.png
+  actions:
+    - text: "View Specifications"
+      link: /stealth/cross-section/
+      icon: right-arrow
+      variant: primary
+    - text: "Avionics Reference"
+      link: /avionics/an-apg-77/
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Tactical Systems Overview
+
+<CardGrid stagger>
+	<Card title="Avionics & Sensors" icon="setting">
+		Detailed documentation on the AN/APG-77 AESA radar, ALR-94 radar warning receiver, and integrated sensor fusion capabilities.
+	</Card>
+	<Card title="Stealth Capabilities" icon="moon">
+		Analysis of Radar Cross-Section (RCS) mitigation, infrared signature reduction, and advanced composite materials.
+	</Card>
+	<Card title="Propulsion & Supercruise" icon="rocket">
+		Pratt & Whitney F119-PW-100 turbofan engines, thrust vectoring, and sustained supersonic flight without afterburners.
+	</Card>
+	<Card title="Weapons Systems" icon="star">
+		Internal weapons bay configuration, AIM-120 AMRAAM, and AIM-9 Sidewinder integration protocols.
+	</Card>
+</CardGrid>

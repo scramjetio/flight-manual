@@ -1,0 +1,92 @@
+---
+title: Quickstart
+description: Get your documentation site running in under 5 minutes.
+---
+
+import { Steps, Tabs, TabItem, Aside } from "@astrojs/starlight/components";
+
+Get a beautiful, AI-ready documentation site running in minutes.
+
+## Prerequisites
+
+- Node.js 18+
+- A GitHub repository for your project
+
+## Setup
+
+<Steps>
+
+1. **Clone the starter**
+
+   ```bash
+   npx create-astro@latest my-docs -- --template garywu/docs-starter
+   cd my-docs
+   ```
+
+2. **Configure your project**
+
+   Edit `astro.config.mjs` and update the `SITE_CONFIG` object:
+
+   ```js
+   const SITE_CONFIG = {
+     title: "My Project",
+     tagline: "Your project description here.",
+     githubUrl: "https://github.com/your-org/your-repo",
+   };
+   ```
+
+3. **Add your OpenAPI spec** (optional)
+
+   Drop your `openapi.json` or `openapi.yaml` into the `public/` directory.
+   The API playground at `/api-reference` will automatically use it.
+
+4. **Start writing docs**
+
+   Add MDX files to `src/content/docs/`:
+
+   ```bash
+   src/content/docs/
+   ├── index.mdx           # Landing page
+   ├── quickstart.mdx       # This page
+   ├── concepts/
+   │   └── architecture.mdx # Architecture docs
+   └── guides/
+       └── deployment.mdx   # How-to guides
+   ```
+
+5. **Preview locally**
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:4321](http://localhost:4321) to see your site.
+
+6. **Deploy to Cloudflare Pages**
+
+   ```bash
+   npm run build
+   npx wrangler pages deploy dist/
+   ```
+
+</Steps>
+
+## What You Get
+
+| Feature | Status | Notes |
+|---|---|---|
+| Full-text search | ✅ Automatic | Pagefind — zero config |
+| API playground | ✅ Drop-in | Add `openapi.json` to `public/` |
+| `llms.txt` | ✅ Auto-generated | Built at deploy time |
+| Dark/light mode | ✅ Built-in | Starlight default |
+| Analytics | ✅ Optional | Add CF Web Analytics token |
+
+<Aside type="tip">
+  Edit `src/styles/custom.css` to change the accent color and typography for your brand.
+</Aside>
+
+## Next Steps
+
+- Read the [Architecture](/concepts/architecture/) guide to understand the stack
+- Check out the [API Reference](/api-reference/) playground
+- Learn about the [llms.txt specification](https://llmstxt.org)

@@ -1,0 +1,19 @@
+{
+  "name": "flight-manual",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.38.4",
+    "@scalar/astro": "^0.2.11",
+    "astro": "^6.1.9",
+    "glob": "^13.0.6",
+    "sharp": "^0.34.5"
+  }
+}

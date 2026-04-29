@@ -1,0 +1,46 @@
+---
+title: Scramjet
+description: Event-Driven Content Pipelines
+---
+
+# Scramjet: Event-Driven Content Pipelines
+
+Scramjet is the execution engine of the Content OS. It orchestrates complex, multi-step content processing pipelines using a simple YAML definition and a library of 40+ atomic operators.
+
+## The Pipeline Model
+
+Scramjet follows the **Ingest → Process → Publish** primitive:
+
+1. **Ingest**: Trigger from a webhook, git push, or schedule.
+2. **Process**: Chain operators for translation, summarization, audio generation, etc.
+3. **Publish**: Fan out to documentation, social media, or book formats.
+
+## Example Pipeline
+
+```yaml
+name: docs-to-podcast
+trigger:
+  type: webhook
+  path: /v1/ingest/docs
+steps:
+  - name: summarize
+    operator: ai.summarize
+    config:
+      model: gemini-2.0-flash
+  - name: generate_audio
+    operator: audio.tts
+    config:
+      provider: elevenlabs
+      voice_id: narrator
+  - name: notify
+    operator: slack.notify
+    config:
+      channel: #content-updates
+```
+
+## Operator Ecosystem
+
+Scramjet comes with pre-built operators for:
+- **AI**: Summarize, Translate, Classify, Extract.
+- **Audio**: TTS, Voice Synthesis, Audio Mastering.
+- **Publish**: GitHub PR, Twitter Post, Email Send.

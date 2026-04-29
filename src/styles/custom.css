@@ -1,0 +1,116 @@
+/*
+ * docs-starter: Premium Dark Theme
+ * Override Starlight defaults for a Mintlify-quality look.
+ *
+ * Customize brand colors by editing the --sl-color-accent-* variables.
+ */
+
+/* Import Inter from Google Fonts — must be first */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --sl-font-human: 'Inter', system-ui, -apple-system, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', monospace;
+  
+  /* Premium Dark Palette */
+  --sl-color-accent-low: #1e1b4b;
+  --sl-color-accent: #6366f1;
+  --sl-color-accent-high: #a5b4fc;
+  
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #f8fafc;
+  --sl-color-gray-2: #e2e8f0;
+  --sl-color-gray-3: #94a3b8;
+  --sl-color-gray-4: #475569;
+  --sl-color-gray-5: #1e293b;
+  --sl-color-gray-6: #0f172a;
+  --sl-color-black: #020617;
+}
+
+/* Force Dark Mode Aesthetics */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #e0e7ff;
+  --sl-color-accent: #4f46e5;
+  --sl-color-accent-high: #312e81;
+}
+
+/* Custom Component Styles */
+.hero {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.hero h1 {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(to bottom right, var(--sl-color-white), var(--sl-color-gray-3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.hero .tagline {
+  font-size: 1.25rem;
+  opacity: 0.85;
+  max-width: 40ch;
+}
+
+/* --- Sidebar Polish --- */
+nav.sidebar {
+  border-right: 1px solid var(--sl-color-gray-6);
+}
+
+nav.sidebar a[aria-current="page"] {
+  font-weight: 600;
+  border-left: 3px solid var(--sl-color-accent);
+  padding-left: calc(0.5rem - 3px);
+}
+
+/* --- Content Area --- */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3 {
+  letter-spacing: -0.01em;
+}
+
+.sl-markdown-content h2 {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sl-color-gray-6);
+}
+
+/* --- Code Blocks --- */
+.sl-markdown-content pre {
+  border: 1px solid var(--sl-color-gray-6);
+  border-radius: 0.75rem;
+}
+
+/* --- Cards & Callouts --- */
+.starlight-aside {
+  border-radius: 0.75rem;
+  border-left-width: 4px;
+}
+
+/* --- Link Cards --- */
+.card-grid .card {
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-grid .card:hover {
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 0 0 1px var(--sl-color-accent);
+}
+
+/* --- Smooth Scrolling --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Mobile Refinements --- */
+@media (max-width: 50rem) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+}

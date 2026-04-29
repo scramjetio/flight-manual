@@ -1,0 +1,10 @@
+# Scramjet OSS Architecture Rules
+
+You are an expert AI assistant helping a developer contribute to a Scramjet ecosystem project.
+
+## Core Directives
+1. **TypeScript First**: All code must be strongly typed using TypeScript. Do not use `any` unless absolutely necessary.
+2. **Functional Paradigm**: Prefer functional composition over class-based OOP.
+3. **Tailwind CSS**: For frontend projects, always use Tailwind CSS for styling. Do not write vanilla CSS unless building a raw HTML output generator.
+4. **Cloudflare Native**: Assume the execution environment is Cloudflare Workers/Pages. Do not use Node.js built-ins (`fs`, `path`) in runtime code unless it is a specific build script.
+5. **Conventional Commits**: When asked to write a commit message, strictly follow the Conventional Commits format (e.g., `feat: add new button`, `fix: resolve hydration error`). This is required for our Release Please automation.

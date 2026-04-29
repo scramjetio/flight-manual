@@ -1,0 +1,21 @@
+name: Greetings
+
+on:
+  pull_request_target:
+    types: [opened]
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: "Welcome to the Scramjet ecosystem! 👋 Thank you for opening your first issue. Our team will triage this shortly."
+          pr-message: "Welcome to the Scramjet ecosystem! 🎉 Thank you for opening your first pull request. A maintainer will review your code soon. Make sure your PR adheres to Conventional Commits so our automated release system can process it!"

@@ -1,0 +1,94 @@
+// @ts-check
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
+import { llmsTxt } from "./integrations/llms-txt";
+import { cfAnalytics } from "./integrations/analytics";
+
+// ============================================================================
+// docs-starter: Astro Starlight Configuration
+// (Renamed to FlightManual)
+// An open-source Mintlify alternative for Hono/Cloudflare projects.
+//
+// Customize these values for your project:
+// ============================================================================
+
+const SITE_CONFIG = {
+  // --- Required ---
+  title: "FlightManual",
+  tagline: "The Modern Content Substrate for the AI Era.",
+  githubUrl: "https://github.com/scramjetio/flight-manual",
+
+  // --- Optional ---
+  logo: undefined,
+  analyticsToken: undefined,
+};
+
+export default defineConfig({
+  site: "https://docs.cloudstart.dev",
+  integrations: [
+    starlight({
+      title: SITE_CONFIG.title,
+      tagline: SITE_CONFIG.tagline,
+      logo: SITE_CONFIG.logo,
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: SITE_CONFIG.githubUrl,
+        },
+      ],
+      // Premium dark theme by default
+      customCss: ["./src/styles/custom.css"],
+      // Sidebar: auto-generate from folder structure with manual overrides
+      sidebar: [
+        { label: "Introduction", slug: "index" },
+        {
+          label: "Avionics & Sensors",
+          autogenerate: { directory: "avionics" },
+        },
+        {
+          label: "Stealth Characteristics",
+          autogenerate: { directory: "stealth" },
+        },
+      ],
+      // Tables of contents depth for more navigation detail
+      tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
+      // Enable edit links
+      editLink: {
+        baseUrl: "https://github.com/scramjetio/flight-manual/edit/main/src/content/docs/",
+      },
+      // Head: add meta tags
+      head: [
+        {
+          tag: "meta",
+          attrs: {
+            name: "og:type",
+            content: "website",
+          },
+        },
+        {
+          tag: "link",
+          attrs: {
+            rel: "icon",
+            href: "/favicon.svg",
+            type: "image/svg+xml",
+          },
+        },
+      ],
+      // Enable expressive code (syntax highlighting)
+      expressiveCode: {
+        themes: ["github-dark"],
+        useThemedScrollbars: false,
+      },
+    }),
+    // Auto-generate llms.txt and llms-full.txt at build time
+    llmsTxt({
+      siteName: SITE_CONFIG.title,
+      siteDescription: SITE_CONFIG.tagline,
+    }),
+    // Inject Cloudflare Web Analytics (if token provided)
+    ...(SITE_CONFIG.analyticsToken
+      ? [cfAnalytics({ token: SITE_CONFIG.analyticsToken })]
+      : []),
+  ],
+});
