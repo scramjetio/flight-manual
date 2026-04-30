@@ -1,8 +1,8 @@
 <!-- The Visual Hook -->
 <div align="center">
-  <img src=".github/assets/hero.png" alt="FlightManual Hero Image" width="600">
+  <img src=".github/assets/hero.png" alt="Flight Manual Hero Image" width="600">
   
-  <h1>FlightManual</h1>
+  <h1>Flight Manual</h1>
   <p><strong>The production-grade, self-documenting framework featuring Edge RBAC, CI/CD automation, and a native AI Agent.</strong></p>
   
   <!-- The 6-Badge Array -->
@@ -19,8 +19,8 @@
 ## ⚡️ The Problem
 Existing documentation templates (like Docusaurus or vanilla Astro) are too basic. You are forced to manually write and maintain your API schemas. They offer no built-in access-control (RBAC) for enterprise clients, and you have to pay third-party SaaS vendors $100+/month just to get a floating AI chatbot like Mintlify or Markprompt.
 
-## 🌟 The Solution (FlightManual)
-FlightManual is an open-source, "Venture-Backed SaaS" grade documentation engine built on top of Astro Starlight. It solves the enterprise documentation problem natively:
+## 🌟 The Solution (Flight Manual)
+Flight Manual is an open-source, "Venture-Backed SaaS" grade documentation engine built on top of Astro Starlight. It solves the enterprise documentation problem natively:
 * **CI/CD Automation**: GitHub Actions automatically pull schemas from your backend repos and open Pull Requests.
 * **Edge RBAC**: Cloudflare Pages Middleware locks down private `/enterprise` directories at the edge.
 * **Native Stateful AI**: A fully integrated Chatbot powered by `assistant-ui` and Cloudflare Durable Objects. You own the Vectorize database and the Llama 3 compute, paying $0 to third-party wrappers.
@@ -52,7 +52,7 @@ npm run deploy
 ```mermaid
 graph TD
     subgraph GitHub
-        A[Backend Repos] -->|GitHub Actions| B(FlightManual Repo)
+        A[Backend Repos] -->|GitHub Actions| B(Flight Manual Repo)
         B -->|Auto-PR| C{Docs Updated}
     end
 
