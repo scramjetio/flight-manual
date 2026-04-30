@@ -3,7 +3,7 @@ import { MessageSquare, X } from 'lucide-react';
 import { AssistantRuntimeProvider } from '@assistant-ui/react';
 import { useChatRuntime } from '@assistant-ui/react-ai-sdk';
 import { Thread } from '../assistant-ui/thread';
-
+import { TooltipProvider } from '../ui/tooltip';
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   
@@ -11,8 +11,9 @@ export function ChatWidget() {
   const runtime = useChatRuntime({ api: '/api/chat' });
 
   return (
-    <AssistantRuntimeProvider runtime={runtime}>
-      {/* Floating Action Button */}
+    <TooltipProvider>
+      <AssistantRuntimeProvider runtime={runtime}>
+        {/* Floating Action Button */}
       <button
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-50 p-4 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700 transition-all transform hover:scale-105 flex items-center justify-center ${isOpen ? 'hidden' : 'block'}`}
@@ -69,5 +70,6 @@ export function ChatWidget() {
         </div>
       )}
     </AssistantRuntimeProvider>
+    </TooltipProvider>
   );
 }
