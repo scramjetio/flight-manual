@@ -1,0 +1,63 @@
+---
+title: Scramjet Automation Pipeline
+description: How to programmatically generate documentation from code using Scramjet.
+slug: v1.0/scramjet-pipeline
+---
+
+The core moat of FlightManual is its native integration with the **Scramjet** data pipeline. Instead of forcing developers to manually write and update Markdown tables every time an API or Operator changes, FlightManual allows you to auto-generate those pages directly from your source code.
+
+## The Problem with "Docs-as-Code"
+
+Platforms like Mintlify use a "Docs-as-Code" approach, which means your Markdown files live in a Git repository.
+
+However, this is just version control. If a backend engineer changes an API property from a `string` to a `number`, someone still has to manually open the Markdown file, find the parameter, and update the text. This leads to severe "documentation drift".
+
+## The Scramjet Solution
+
+FlightManual flips this paradigm. By using Scramjet (a unified data processing framework), we pull the *actual types* directly from the source code.
+
+import { Steps } from '@astrojs/starlight/components';
+import Expandable from '@/components/docs/Expandable.astro';
+import { Code } from '@astrojs/starlight/components';
+
+### How it Works
+
+<Steps>
+  1. **Source of Truth**
+
+     Your backend repository defines input and output schemas using a type validator (like `zod`).
+
+  2. **Extraction**
+
+     A build script (`scripts/gather-content.mjs`) connects to your backend repo, parses the Zod schemas, and extracts the keys, types, and descriptions.
+
+  3. **Generation**
+
+     The script programmatically writes `.mdx` files into the `src/content/docs/generated/` folder of FlightManual, injecting our premium `<ApiField>` components.
+
+  4. **Rendering**
+
+     FlightManual builds the site, presenting a beautiful, 100% accurate documentation page that is impossible to desync from the code.
+</Steps>
+
+## Example
+
+Instead of manually typing out your API properties, Scramjet reads your actual code:
+
+<Expandable title="View Raw Zod Schema">
+  <Code code={`import { z } from "zod";\n\nexport const userSchema = z.object({\n  user_id: z.string().describe("The unique identifier of the user making the request."),\n});`} lang="typescript" />
+</Expandable>
+
+When the pipeline runs, it generates MDX code that looks like this:
+
+```html
+import ApiField from '@/components/docs/ApiField.astro';
+
+## Input Schema
+
+&lt;ApiField name="user_id" type="string" required&gt;
+  The unique identifier of the user making the request.
+&lt;/ApiField&gt;
+```
+
+When rendered, you get a beautiful, interactive component without ever writing a line of Markdown manually!

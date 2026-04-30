@@ -1,0 +1,29 @@
+---
+import { ChevronDown } from "lucide-react";
+
+interface Props {
+  title: string;
+  icon?: string;
+}
+
+const { title, icon } = Astro.props;
+---
+
+<details class="group bg-background open:bg-muted/10 transition-colors">
+  <summary class="flex items-center gap-3 px-5 py-4 cursor-pointer list-none font-medium text-[15px] text-foreground/90 hover:text-foreground">
+    <div class="transition-transform duration-200 group-open:rotate-180 text-muted-foreground">
+      <ChevronDown size={18} />
+    </div>
+    {icon && <span class="text-muted-foreground">{icon}</span>}
+    {title}
+  </summary>
+  <div class="px-5 pb-5 pt-1 text-sm text-muted-foreground prose prose-sm dark:prose-invert max-w-none">
+    <slot />
+  </div>
+</details>
+
+<style>
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

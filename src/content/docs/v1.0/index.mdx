@@ -1,0 +1,100 @@
+---
+title: Flight Manual
+description: The Open-Source Zod-native Documentation Framework.
+template: splash
+hero:
+  tagline: The Modern Content Substrate for the AI Era.
+  image:
+    file: ../../../assets/v1.0/flight-manual-cockpit.png
+  actions:
+    - text: Get Started
+      link: /v1.0/quickstart/
+      icon: right-arrow
+      variant: primary
+    - text: View GitHub
+      link: https://github.com/scramjetio/flight-manual
+      icon: external
+slug: v1.0
+---
+
+import { Card, CardGrid, LinkCard, Tabs, TabItem, Code } from '@astrojs/starlight/components';
+import { ScalarComponent } from "@scalar/astro";
+import { ChatWidget } from '../../../components/docs/ChatWidget.tsx';
+
+## Explore the Documentation
+
+<CardGrid>
+  <LinkCard title="Quickstart Guide" description="Install Flight Manual and deploy your first AI-native docs site in 5 minutes." href="/quickstart/" />
+
+  <LinkCard title="Architecture Setup" description="Learn how the Edge RBAC and Cloudflare Durable Objects are wired together." href="/configuration/" />
+</CardGrid>
+
+***
+
+## Why Flight Manual?
+
+Flight Manual is a deterministic, edge-ready documentation framework designed for backend engineering teams. Built on Astro Starlight, it brings a premium developer experience, integrated API playgrounds, and native Zod schema codegen to your documentation.
+
+<CardGrid stagger>
+  <Card title="Build-Time Codegen" icon="setting">
+    Stop updating OpenAPI specs by hand. Parse Zod schemas from your backend and deterministically generate MDX reference documentation at build time.
+  </Card>
+
+  <Card title="Docs-as-Code" icon="document">
+    Manage your documentation natively in Git. Use our Scramjet content pipeline to auto-generate docs directly from Zod schemas and source code.
+  </Card>
+
+  <Card title="Interactive API Playground" icon="rocket">
+    Integrated Scalar OpenAPI playgrounds. Allow your developers to test endpoints, view payloads, and generate `cURL` snippets instantly.
+  </Card>
+
+  <Card title="AI-Native Outputs" icon="star">
+    Auto-generates `llms.txt` and `sitemap.xml` on every build. Your documentation is instantly readable by Perplexity, ChatGPT, and Claude.
+  </Card>
+
+  <Card title="Stateful AI Agent" icon="bot">
+    A native, Llama 3 powered `assistant-ui` Chatbot built on Cloudflare Durable Objects. Zero SaaS fees.
+  </Card>
+
+  <Card title="Cloudflare Edge RBAC" icon="lock">
+    Protect enterprise documentation directories with native Edge Middleware. Complete access control.
+  </Card>
+</CardGrid>
+
+***
+
+## The Ultimate DX, Out of the Box
+
+Flight Manual gives you premium components like interactive Code Tabs without the enterprise price tag.
+
+<Tabs>
+  <TabItem label="Install with npm">
+    <Code code={`npm install @scramjet/flight-manual`} lang="bash" />
+  </TabItem>
+
+  <TabItem label="Install with pnpm">
+    <Code code={`pnpm add @scramjet/flight-manual`} lang="bash" />
+  </TabItem>
+
+  <TabItem label="Install with yarn">
+    <Code code={`yarn add @scramjet/flight-manual`} lang="bash" />
+  </TabItem>
+</Tabs>
+
+***
+
+## 🕹️ Live API Playground
+
+Test out the interactive API documentation below. Flight Manual uses Scalar to instantly convert your OpenAPI specifications into beautiful, testable interfaces.
+
+<ScalarComponent
+  configuration={{
+  url: "/openapi.json",
+  theme: "purple",
+  layout: "modern",
+  hideModels: false,
+  searchHotKey: "k",
+}}
+/>
+
+<ChatWidget client:load />

@@ -1,0 +1,59 @@
+---
+title: UberMesh
+description: The Content Operating System substrate.
+slug: v1.0/generated/reference/ubermesh
+---
+
+> **Org Status**: 🟢 Active
+> **Cloudflare**: ubermesh
+> **Last Audited**: 2026-04-28
+
+***
+
+Polymorphic content-addressed substrate. `defineType` generates full API surfaces. The pipeline IS the CMS.
+
+## What Is This
+
+UberMesh is the unified content layer (Layer 1) for the Atlas ecosystem. You declare types. UberMesh makes them real:
+
+```typescript
+defineType("post", {
+  title: "string",
+  body: "rich_text",
+  brand: { ref: "brand" },
+  surface: "string",
+})
+// -> REST endpoints, MCP tools, CLI commands, TypeScript types, query validation
+```
+
+Every piece of content is the output of a transformation pipeline, stored content-addressed. Content compounds -- every output becomes input to the next transformation.
+
+## Monorepo Structure
+
+```
+ubermesh/
+  packages/
+    core/       -- defineType, storage, query engine
+    cli/        -- unim CLI (generated from type definitions)
+    mcp/        -- MCP server (generated from type definitions)
+  wiki/         -- Knowledge base (dogfoods the Karpathy compounding principle)
+  hq/           -- Atlas business unit identity + RFCs
+```
+
+## Principles
+
+1. **Content compounds.** Every output can be input to the next pipeline.
+2. **The pipeline IS the CMS.** AI produces. Humans supervise.
+3. **A brand IS the DAG.** The complete graph of all content transformations.
+4. **Polymorphic types, not built-in types.** `defineType()` makes anything real.
+5. **Knowledge compounds.** The Karpathy LLM Wiki principle applied to all content.
+
+## Status
+
+**Inception.** Wiki consolidated, repo created. RFC-ORG-006 pending. No code yet.
+
+## Links
+
+* Domain: ubermesh.com
+* Design docs: [wiki/](wiki/)
+* Cross-repo context: README/wiki/business/ (5 foundational pages from session 11)

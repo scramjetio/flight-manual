@@ -1,0 +1,40 @@
+---
+title: User
+description: API Reference for the User object.
+slug: v1.0/generated/api/user
+---
+
+import ApiField from '@/components/docs/ApiField.astro';
+import Expandable from '@/components/docs/Expandable.astro';
+
+## Schema Properties
+
+<ApiField name="id" type="string" required>
+  The unique identifier for the user.
+</ApiField>
+
+<ApiField name="email" type="string" required>
+  The primary email address of the user.
+</ApiField>
+
+<ApiField name="role" type="enum" required>
+  The access level granted to the user.
+</ApiField>
+
+<ApiField name="createdAt" type="string" required>
+  ISO 8601 timestamp of when the user was created.
+</ApiField>
+
+<ApiField name="metadata" type="object">
+  Optional metadata associated with the user profile.
+
+  <Expandable title="View Properties">
+    <ApiField name="lastLogin" type="string">
+      Timestamp of the last successful login.
+    </ApiField>
+
+    <ApiField name="preferences" type="Record<string, string>">
+      Arbitrary key-value pairs for user preferences.
+    </ApiField>
+  </Expandable>
+</ApiField>

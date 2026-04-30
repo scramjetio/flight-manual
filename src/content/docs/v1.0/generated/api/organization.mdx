@@ -1,0 +1,30 @@
+---
+title: Organization
+description: API Reference for the Organization object.
+slug: v1.0/generated/api/organization
+---
+
+import ApiField from '@/components/docs/ApiField.astro';
+import Expandable from '@/components/docs/Expandable.astro';
+
+## Schema Properties
+
+<ApiField name="orgId" type="string" required>
+  The unique identifier for the organization.
+</ApiField>
+
+<ApiField name="name" type="string" required>
+  The display name of the organization.
+</ApiField>
+
+<ApiField name="tier" type="enum" required>
+  The billing tier the organization is currently on.
+</ApiField>
+
+<ApiField name="memberCount" type="number" required>
+  The current number of active members.
+</ApiField>
+
+<ApiField name="isVerified" type="boolean" required>
+  Whether the organization has completed domain verification.
+</ApiField>

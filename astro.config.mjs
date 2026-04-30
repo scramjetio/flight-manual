@@ -7,6 +7,8 @@ import sitemap from "@astrojs/sitemap";
 import { llmsTxt } from "./integrations/llms-txt";
 import { cfAnalytics } from "./integrations/analytics";
 
+import starlightVersions from 'starlight-versions';
+
 // ============================================================================
 // docs-starter: Astro Starlight Configuration
 // (Renamed to FlightManual)
@@ -34,6 +36,14 @@ export default defineConfig({
   integrations: [
     react(),
     starlight({
+      plugins: [
+        starlightVersions({
+          current: { label: 'Latest' },
+          versions: [
+            { slug: 'v1.0' }
+          ]
+        })
+      ],
       title: SITE_CONFIG.title,
       tagline: SITE_CONFIG.tagline,
       logo: SITE_CONFIG.logo,
@@ -58,8 +68,12 @@ export default defineConfig({
         { label: "Scramjet Automation", slug: "scramjet-pipeline" },
         { label: "API Playground", slug: "api-reference" },
         {
-          label: "Component Library",
-          autogenerate: { directory: "components" },
+          label: "Guides",
+          autogenerate: { directory: "guides" },
+        },
+        {
+          label: "API Reference (Zod)",
+          autogenerate: { directory: "generated/api" },
         },
         {
           label: "Wiki / HQ",

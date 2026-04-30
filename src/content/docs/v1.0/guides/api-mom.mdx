@@ -1,0 +1,36 @@
+---
+title: API Mom
+description: The Global API Traffic Controller
+slug: v1.0/guides/api-mom
+---
+
+# API Mom: The Global API Traffic Controller
+
+API Mom is a high-performance, cost-aware API router and governor built for the agentic era. It provides a single, unified entry point for all upstream AI providers and internal microservices.
+
+## Core Features
+
+* **Unified Routing**: Route through one endpoint to Gemini, Anthropic, OpenAI, and more.
+* **Cost Attribution**: Track every token spent at the project, function, and user level.
+* **Durable Caching**: Built-in KV caching for idempotent requests.
+* **Budget Guardrails**: Set hard limits on spend per project to prevent runaway costs.
+
+## Quick Example
+
+```typescript
+import { createApiMom } from "@apimom/client";
+
+const mom = createApiMom({
+  API_MOM_KEY: process.env.API_MOM_KEY,
+  API_MOM_PROJECT: "docs-demo"
+});
+
+// Route through Gemini with automatic budget tracking
+const response = await mom.child("gemini").post("/v1beta/models/gemini-2.0-flash:generateContent", {
+  contents: [{ parts: [{ text: "Hello, API Mom!" }] }]
+});
+```
+
+## Architecture
+
+API Mom runs on the Cloudflare Edge, ensuring sub-10ms latency for routing decisions. It integrates seamlessly with **Scramjet** for pipeline-driven workflows.

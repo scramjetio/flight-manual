@@ -1,0 +1,283 @@
+---
+title: Scramjet
+description: Universal Capture. Transform. Send.
+slug: v1.0/generated/reference/scramjet
+---
+
+> **Org Status**: 🟢 Active
+> **Cloudflare**: N/A
+> **Last Audited**: 2026-04-28
+
+***
+
+**Universal Capture. Transform. Send.**
+
+One pipeline engine on Cloudflare's edge. Multiple surfaces for data capture. One YAML format for processing. Fast, durable, fire-and-forget. Evolving into a capability orchestrator where pipelines invoke AI services, render engines, and external tools through a unified cost-aware routing layer.
+
+## What is Scramjet?
+
+Scramjet is a pipeline platform that captures data from any source, transforms it through composable operators on Cloudflare's edge, and sends results anywhere. Every operation — from a simple RSS digest to a scheduled multi-step AI pipeline — runs as a YAML pipeline with durable execution, automatic retries, and plan-based resource limits.
+
+Scramjet is also becoming a capability orchestrator. The `invoke` operator (RFC-SJ-001) lets pipelines call external capabilities — text-to-speech, video rendering, image generation — through API Mom, a capability registry that handles routing, cost tracking, and provider selection. This turns Scramjet from a data pipeline into a general-purpose workflow engine where each step can be an AI call, a render job, or any service with a cost.
+
+### Surfaces
+
+| Surface | Purpose | Path | Status |
+|---------|---------|------|--------|
+| **Web App** | Manage pipelines, billing, settings | `apps/admin/` → app.scramjet.io | Built |
+| **Marketing Site** | Free tools, landing pages, auth | `apps/web/` → scramjet.io | Built |
+| **Chrome Extension** | Extract data from any webpage | — | Planned |
+| **Desktop App** | Site crawling, bulk file processing | — | Planned |
+| **Mobile App** | Scan, OCR, photo/voice capture | — | Planned |
+
+### How It Works
+
+```
+Capture (any surface)
+    |
+Edge Engine (Cloudflare Workers)
+    | YAML pipeline: fetch -> transform -> invoke -> output
+    | Durable execution via Workflows
+    | Capability invocation via API Mom
+    | File buffering via Media Store
+    |
+Send (webhook, Slack, R2, API, email, Discord, Telegram, Notion, GitHub)
+```
+
+## Quick Start
+
+```bash
+pnpm install          # install all workspace dependencies
+pnpm dev              # start engine dev server (port 8787)
+pnpm dev:app          # start dashboard dev server
+pnpm check            # typecheck all packages
+```
+
+## Pipeline Examples
+
+### Data pipeline
+
+```yaml
+name: tech-digest
+schedule: "0 7 * * *"
+
+fetch:
+  - type: rss
+    url: https://hnrss.org/frontpage
+  - type: reddit
+    subreddit: programming
+    sort: top
+    limit: 25
+
+transform:
+  - dedup: url
+  - ai:
+      model: haiku
+      prompt: "Score relevance to serverless/edge, 1-10"
+      output: relevance
+  - filter: "relevance.score > 7"
+  - sort: relevance.score desc
+  - limit: 10
+
+output:
+  - json
+  - slack:
+      webhook: "{{ secrets.slack_webhook }}"
+```
+
+### Capability pipeline (invoke operator)
+
+```yaml
+name: render-video
+schedule: manual
+
+fetch:
+  - type: api
+    url: "{{ secrets.content_api }}/scripts/pending"
+
+transform:
+  - invoke:
+      capability: text-to-speech
+      input: { text: "{{ item.narration }}", voice: "christopher" }
+      output: audio_key
+      cache: true
+  - invoke:
+      capability: video-render
+      input: { clips: "{{ item.clips }}", audio_key: "{{ item.audio_key }}" }
+      output: video_key
+      budget_cents: 50
+
+output:
+  - r2:
+      key: "videos/{{ item.id }}.mp4"
+```
+
+## Operators
+
+**Fetch (15):** `rss` · `scraper` · `browser` · `reddit` · `bluesky` · `api` · `webhook` · `crawl` · `mcp` · `research` · `youtube_transcript` · `search` · `wan` · `viral_videos` · `github_org`
+
+**Transform (20+):** `dedup` · `filter` · `regex` · `sort` · `limit` · `map` · `ai` · `aggregate` · `group_limit` · `parallel` · `fan_out` · `enrich` · `scrape` · `mcp` · `content_generate` · `scatter_gather` · `quality_gate` · `convert` · `external` · `remotion_compose` · `invoke` (RFC-SJ-001)
+
+**Output (13):** `json` · `webhook` · `slack` · `email` · `r2` · `discord` · `telegram` · `google_sheets` · `notion` · `github` · `github_commit` · `queue` · `emit_event`
+
+The `ai` transform supports 6 providers: `workers-ai`, `openai`, `anthropic`, `google`, `perplexity`, `openrouter`.
+
+## Capability Architecture
+
+Scramjet is evolving from a pipeline engine into a three-layer capability orchestrator:
+
+```
+Layer 3: Scram-Jet (pipeline orchestration)
+         YAML pipelines, scheduling, durable execution
+              |
+Layer 2: API Mom (capability registry + routing)
+         Cost tracking, provider selection, budget enforcement
+              |
+Layer 1: Capability providers
+         Local machines, rented GPUs, commercial APIs (OpenAI, ElevenLabs, Remotion)
+```
+
+The `invoke` operator (RFC-SJ-001) bridges Layer 3 and Layer 2. A pipeline step like `invoke: { capability: text-to-speech }` routes through API Mom's CapabilityRegistryDO, which resolves the best provider based on cost, latency, and availability. Results flow back as pipeline items. Media Store provides universal file buffering between steps.
+
+See `hq/rfcs/RFC-SJ-001-invoke-capability-operator.md` for the full design.
+
+## Monorepo Structure
+
+```
+scramjet/
+├── apps/
+│   ├── web/                     # Marketing site (Astro 5 + React 19) -> scramjet.io
+│   │   ├── src/pages/           # Routes: /, /pricing, /login, /signup, /tools/*
+│   │   ├── src/components/      # Landing sections, free tool components
+│   │   └── src/middleware.ts    # Redirects /app/* -> app.scramjet.io
+│   │
+│   └── admin/                   # Dashboard SPA (Hono + Vite + React 19) -> app.scramjet.io
+│       ├── src/routes/          # TanStack Router: /, /secrets, /settings
+│       ├── src/components/      # Pipelines, secrets, billing, API keys
+│       └── worker/index.ts      # Hono auth middleware + SPA serving
+│
+├── packages/
+│   ├── engine/                  # Core Cloudflare Worker (the engine)
+│   │   ├── src/
+│   │   │   ├── index.ts         # Hono entry, routes, auth, cron/queue handlers
+│   │   │   ├── api/             # REST endpoints (pipelines, secrets, billing, stats, skills, tools, mulan)
+│   │   │   ├── operators/       # Fetch (15), Transform (20+), Output (13)
+│   │   │   ├── runtime/         # PipelineStore (DO), PipeWorkflow (Workflow)
+│   │   │   ├── services/        # Secrets, limits, LLM, usage, versioning, Stripe
+│   │   │   └── mcp/             # MCP server (13 tools)
+│   │   ├── migrations/          # D1 SQL migrations
+│   │   └── wrangler.jsonc       # Cloudflare bindings
+│   │
+│   ├── auth/                    # Better Auth (D1 + Kysely, cross-subdomain cookies)
+│   ├── shared/                  # Zod pipeline schemas (1105 lines, single source of truth)
+│   ├── ui/                      # Shared UI components (React)
+│   ├── cli/                     # CLI tool — manage pipelines, trigger runs, inspect costs
+│   ├── api-mom/                 # API Mom — cost tracking and reconciliation Worker
+│   └── design/                  # Design assets (icons)
+│
+├── hq/                          # Strategy and research
+│   ├── rfcs/                    # RFCs (RFC-SJ-001 invoke operator)
+│   └── research/                # Research reports (7 documents)
+│
+├── kb/                          # Engine knowledge base (architecture, product vision, market)
+├── .github/workflows/           # CI/CD (engine, web, admin)
+└── pitch-deck/                  # Strategy & market analysis (Marp)
+```
+
+## Packages
+
+| Package | Path | Description |
+|---|---|---|
+| `@scramjet/engine` | `packages/engine/` | Cloudflare Worker — operators, workflows, MCP server, REST API |
+| `@scramjet/shared` | `packages/shared/` | Zod pipeline schemas — canonical pipeline format definition |
+| `@scramjet/auth` | `packages/auth/` | Better Auth wrapper for D1-backed session auth |
+| `@scramjet/ui` | `packages/ui/` | Shared React UI components |
+| `@scramjet/api-mom` | `packages/api-mom/` | API Mom — cost tracking and reconciliation Worker |
+| `scramjet-cli` | `packages/cli/` | CLI for managing pipelines, triggering runs, inspecting costs |
+| `scramjet-admin` | `apps/admin/` | Dashboard SPA (Hono + Vite + React 19 + TanStack Router) |
+| `web` | `apps/web/` | Marketing site (Astro 5 + React 19 + Tailwind) |
+
+## Architecture
+
+### Stack
+
+* **Runtime:** Cloudflare Workers + Durable Objects (SQLite) + Workflows + Queues + Browser Rendering + R2
+* **HTTP Framework:** Hono
+* **Validation:** Zod (pipeline schemas in `@scramjet/shared`)
+* **Auth:** Better Auth (cross-subdomain `.scramjet.io` cookies) + API keys (SHA-256)
+* **AI Agent Interface:** MCP server (`@modelcontextprotocol/sdk` + `agents`)
+* **Dashboard:** Vite + React 19 + TanStack Router, served by Hono Worker
+* **Language:** TypeScript only
+
+### Cloudflare Bindings
+
+| Binding | Type | Purpose |
+|---------|------|---------|
+| `PIPELINE_STORE` | Durable Object | Per-pipeline SQLite state (items, dedup, runs, batches) |
+| `PIPE_WORKFLOW` | Workflow | Durable pipeline execution with automatic retries |
+| `DB` | D1 | Central registry (accounts, pipelines, api\_keys, secrets, audit log) |
+| `ARCHIVE` | R2 | Temporary output buffer (TTL-based) |
+| `AI` | Workers AI | AI transform operator |
+| `BROWSER` | Browser Rendering | Puppeteer-based JS-rendered page scraping |
+| `EVENTS_QUEUE` | Queue | Event-driven pipeline triggers |
+
+### Execution Flow
+
+```
+AI Agent -> MCP Server -> Validate YAML -> Store in D1
+                                           |
+                        Cron (*/1 min) -> PipeWorkflow (CF Workflow)
+                                           |
+                        1. Resolve secrets (decrypt from D1)
+                        2. Fetch (parallel, all sources)
+                        3. Store items in PipelineStore DO (batch offloading)
+                        4. Transform pipeline (sequential)
+                        5. Output (parallel, all sinks)
+                        6. Persist final items + complete run record
+```
+
+### MCP Tools (13)
+
+Pipeline management: `list_pipelines` · `get_pipeline` · `deploy_pipeline` · `update_pipeline` · `delete_pipeline` · `validate_pipeline` · `trigger_pipeline` · `pause_pipeline`
+
+Secrets: `set_secret` · `list_secrets` · `delete_secret`
+
+Observability: `get_runs` · `get_output`
+
+### REST API
+
+| Endpoint | Description |
+|----------|-------------|
+| `POST\|GET /api/auth/*` | Better Auth (login, signup, session) |
+| `GET\|POST\|PUT\|DELETE /v1/pipelines/*` | Pipeline CRUD, validate, trigger, pause/resume |
+| `POST /v1/pipelines/execute` | Ad-hoc execution (unauthenticated, for demos) |
+| `GET /v1/pipelines/:id/runs` | Run history |
+| `GET /v1/pipelines/:id/output` | Output items |
+| `POST\|GET\|DELETE /v1/secrets/*` | Secret management |
+| `POST\|GET\|DELETE /v1/api-keys/*` | API key management |
+| `GET\|POST /v1/billing/*` | Stripe billing and subscription management |
+| `GET /v1/stats/*` | Pipeline and account statistics |
+| `GET\|POST /v1/skills/*` | Skill templates and discovery |
+| `GET\|POST /v1/tools/*` | Tool registry |
+| `POST /v1/mulan/*` | Mulan integration endpoint |
+| `ALL /mcp` | MCP server endpoint |
+
+## Deployment
+
+Engine and web auto-deploy via GitHub Actions on push to `main`. Manual:
+
+```bash
+pnpm deploy           # deploy engine to Cloudflare Workers
+pnpm deploy:app       # deploy dashboard to Cloudflare Workers
+```
+
+## Key Documents
+
+* [`kb/`](kb/) — Knowledge base (engine philosophy, product vision, market research, pSEO strategy)
+* [`hq/rfcs/`](hq/rfcs/) — RFCs (RFC-SJ-001 invoke capability operator)
+* [`hq/research/`](hq/research/) — Research reports (pipeline SOTA, design warnings, 7 documents)
+* [`CLAUDE.md`](CLAUDE.md) — AI assistant coding guidelines
+
+## License
+
+Private — All rights reserved.

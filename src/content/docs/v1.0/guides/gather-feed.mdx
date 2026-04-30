@@ -1,0 +1,23 @@
+---
+title: GatherFeed
+description: The Medallion DaaS Engine
+slug: v1.0/guides/gather-feed
+---
+
+# GatherFeed: The Medallion DaaS Engine
+
+GatherFeed is the ingestion layer that feeds the Content OS. It implements a **Medallion Architecture** to transform raw, noisy data into high-quality, structured knowledge.
+
+## The Medallion Tiers
+
+* **Bronze (Raw)**: Raw JSON ingestion from external APIs and scrapers. Immutable history.
+* **Silver (Structured)**: Typed, validated, and de-duplicated records using UberMesh schemas.
+* **Gold (Knowledge)**: Searchable, AI-enhanced knowledge nodes ready for publishing.
+
+## Integration with UberMesh
+
+GatherFeed uses `defineType` from UberMesh to enforce schema integrity across all tiers. This ensures that a "Product" in the Silver tier is perfectly compatible with the "Product" in your Gold search index.
+
+## Search & Discovery
+
+Built-in FTS5 support and Vectorize integration allow you to query your Gold data with natural language immediately after ingestion.

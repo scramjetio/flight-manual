@@ -1,0 +1,42 @@
+{
+  "sidebar": [
+    {
+      "label": "Welcome",
+      "slug": "index"
+    },
+    {
+      "label": "Quickstart",
+      "slug": "quickstart"
+    },
+    {
+      "label": "Configuration",
+      "slug": "configuration"
+    },
+    {
+      "label": "Scramjet Automation",
+      "slug": "scramjet-pipeline"
+    },
+    {
+      "label": "API Playground",
+      "slug": "api-reference"
+    },
+    {
+      "label": "Guides",
+      "autogenerate": {
+        "directory": "guides"
+      }
+    },
+    {
+      "label": "API Reference (Zod)",
+      "autogenerate": {
+        "directory": "generated/api"
+      }
+    },
+    {
+      "label": "Wiki / HQ",
+      "autogenerate": {
+        "directory": "wiki"
+      }
+    }
+  ]
+}

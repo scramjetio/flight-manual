@@ -1,0 +1,59 @@
+---
+title: Component Library
+description: A showcase of the premium UI components available in Flight Manual.
+slug: v1.0/guides/components
+---
+
+import Frame from '@/components/docs/Frame.astro';
+import AccordionGroup from '@/components/docs/AccordionGroup.astro';
+import Accordion from '@/components/docs/Accordion.astro';
+
+Flight Manual provides a suite of premium, Mintlify-tier UI components built on top of Astro Starlight. These components allow you to create beautiful, interactive documentation out of the box.
+
+## Frame
+
+The `<Frame>` component is used to elegantly display screenshots, images, or UI diagrams. It wraps the content in a beautiful, glassy border with a subtle shadow, providing a premium feel.
+
+<Frame caption="The Flight Manual cockpit architecture.">
+  <img src="https://images.unsplash.com/photo-1540914940562-108253a5c711?q=80&w=2000&auto=format&fit=crop" alt="Abstract gradient" />
+</Frame>
+
+```mdx
+import Frame from '@/components/docs/Frame.astro';
+
+<Frame caption="The Flight Manual cockpit architecture.">
+  <img src="/path/to/image.png" alt="Architecture diagram" />
+</Frame>
+```
+
+## Accordion Group
+
+The `<AccordionGroup>` and `<Accordion>` components are perfect for creating FAQs, troubleshooting guides, or hiding dense information until the user needs it.
+
+<AccordionGroup>
+  <Accordion title="How do I deploy Flight Manual?" icon="🚀">
+    Flight Manual is optimized for Cloudflare Pages. You can deploy it using the Wrangler CLI or by connecting your GitHub repository directly to the Cloudflare dashboard.
+  </Accordion>
+
+  <Accordion title="Is there a cost to use this framework?" icon="💰">
+    No! Flight Manual is 100% open-source and free forever. You can self-host it or deploy it to Cloudflare Pages (which has an incredibly generous free tier).
+  </Accordion>
+
+  <Accordion title="Can I use this with my existing Zod schemas?" icon="📦">
+    Yes! The Zod-to-MDX codegen pipeline is designed to read your existing backend Zod schemas and automatically generate your API reference documentation.
+  </Accordion>
+</AccordionGroup>
+
+```mdx
+import AccordionGroup from '@/components/docs/AccordionGroup.astro';
+import Accordion from '@/components/docs/Accordion.astro';
+
+<AccordionGroup>
+  <Accordion title="How do I deploy Flight Manual?" icon="🚀">
+    Flight Manual is optimized for Cloudflare Pages...
+  </Accordion>
+  <Accordion title="Is there a cost to use this framework?" icon="💰">
+    No! Flight Manual is 100% open-source...
+  </Accordion>
+</AccordionGroup>
+```

@@ -1,0 +1,61 @@
+---
+title: Quickstart
+description: Get started with FlightManual in under 5 minutes.
+slug: v1.0/quickstart
+---
+
+Welcome to **FlightManual**! This guide will help you spin up your own open-source, enterprise-grade developer portal in minutes.
+
+import { Steps } from '@astrojs/starlight/components';
+import Callout from '@/components/docs/Callout.astro';
+
+<Callout type="warning" title="Prerequisites">
+  Before you begin, ensure you have **Node.js (v18 or higher)** and `npm` or `pnpm` installed.
+</Callout>
+
+<Steps>
+  1. **Clone the Engine**
+
+     FlightManual is a self-contained Astro project. To get started, clone the repository:
+
+     ```bash
+     git clone https://github.com/scramjetio/flight-manual.git my-docs
+     cd my-docs
+     ```
+
+  2. **Install Dependencies**
+
+     Install the necessary dependencies to pull down Astro, Starlight, Tailwind CSS v4, and our Shadcn components:
+
+     ```bash
+     npm install
+     ```
+
+  3. **Start the Development Server**
+
+     Boot up the local Vite development server to see your documentation in real-time.
+
+     ```bash
+     npm run dev
+     ```
+
+     Navigate to `http://localhost:4321` in your browser. Any changes you make to the `.mdx` files in `src/content/docs/` will automatically hot-reload.
+
+  4. **Customize Your Docs**
+
+     Now that you have the engine running, it's time to make it your own:
+
+     * **Edit Content**: Open `src/content/docs/index.mdx` to change the landing page.
+     * **Configuration**: Head over to our [Configuration Guide](/v1.0/configuration/) to learn how to update the `astro.config.mjs` file with your own logo.
+     * **Use Components**: Check out the [Component Showcase](/v1.0/components/api-field/) to see how to document APIs beautifully.
+
+  5. **Build for Production**
+
+     When you are ready to ship, run the production build command:
+
+     ```bash
+     npm run build
+     ```
+
+     This generates a highly optimized static site in the `dist/` folder, complete with a `sitemap-index.xml` and an AI-ready `llms.txt` file. You can deploy this folder directly to Cloudflare Pages.
+</Steps>

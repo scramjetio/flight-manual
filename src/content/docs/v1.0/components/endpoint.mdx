@@ -1,0 +1,34 @@
+---
+title: Endpoint
+description: Display HTTP methods and routes beautifully.
+slug: v1.0/components/endpoint
+---
+
+import Endpoint from '@/components/docs/Endpoint.astro';
+
+When documenting REST or RPC APIs, you need to clearly display the HTTP method (GET, POST, PUT, DELETE) and the route. The `<Endpoint>` component automatically color-codes the badge based on the method.
+
+## Usage
+
+```mdx
+import Endpoint from '@/components/docs/Endpoint.astro';
+
+<Endpoint method="GET" path="/v1/users/:id" />
+<Endpoint method="POST" path="/v1/users" />
+<Endpoint method="DELETE" path="/v1/users/:id" />
+```
+
+## Preview
+
+<Endpoint method="GET" path="/v1/users/:id" />
+
+<Endpoint method="POST" path="/v1/users" />
+
+<Endpoint method="DELETE" path="/v1/users/:id" />
+
+## Properties
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `method` | `"GET" \| "POST" \| "PUT" \| "PATCH" \| "DELETE"` | **Yes** | The HTTP method, used to color-code the badge. |
+| `path` | `string` | **Yes** | The URI route or endpoint path. |

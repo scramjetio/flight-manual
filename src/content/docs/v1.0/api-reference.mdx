@@ -1,0 +1,19 @@
+---
+title: API Reference
+description: Interactive API documentation with try-it-live requests.
+slug: v1.0/api-reference
+---
+
+import { ScalarComponent } from "@scalar/astro";
+
+Explore the API with the interactive playground below. You can make live requests directly from this page.
+
+<ScalarComponent
+  configuration={{
+  url: "/openapi.json",
+  theme: "purple",
+  layout: "modern",
+  hideModels: false,
+  searchHotKey: "k",
+}}
+/>

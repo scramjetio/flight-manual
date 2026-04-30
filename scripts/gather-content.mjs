@@ -61,7 +61,7 @@ function parseField(name, field, depth = 0) {
   } else if (typeName === 'union') {
     const options = inner._def.options || [];
     const types = options.map(opt => {
-      if (opt._def?.type === 'literal') return `"${opt._def.values[0]}"`;
+      if (opt._def?.type === 'literal') return `'${opt._def.values[0]}'`;
       return extractTypeInfo(opt).typeName;
     });
     typeStr = types.join(' | ');
