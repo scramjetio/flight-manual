@@ -70,7 +70,7 @@ export default defineConfig({
       tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 4 },
       // Enable edit links
       editLink: {
-        baseUrl: "https://github.com/scramjetio/flight-manual/edit/main/src/content/docs/",
+        baseUrl: "https://github.com/scramjetio/flight-manual/edit/main/",
       },
       // Head: add meta tags
       head: [
