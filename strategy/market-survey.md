@@ -84,7 +84,7 @@ description: Competitive landscape analysis of documentation engines and platfor
 | Edge deployment | ✅ CF Pages | ✅ Managed | ✅ | N/A | ❌ | ✅ | ✅ | ✅ | ❌ |
 | Self-hostable | ✅ | ❌ | ✅ Docker | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ |
 | Zero vendor lock-in | ✅ | ❌ | ⚠️ | ✅ | ✅ | ❌ | ❌ | ⚠️ | ✅ |
-| Build speed | ✅ <4s | ✅ | ✅ | ✅ | ⚠️ Slower | N/A | N/A | ✅ | N/A |
+| Build speed | ✅ &lt;4s | ✅ | ✅ | ✅ | ⚠️ Slower | N/A | N/A | ✅ | N/A |
 
 ### 7. Analytics & Observability
 

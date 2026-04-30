@@ -1,0 +1,62 @@
+---
+import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
+
+interface Props {
+  method: string;
+  url: string;
+  body?: string;
+}
+
+const { method, url, body } = Astro.props;
+
+// Generate cURL snippet
+let curlSnippet = `curl -X ${method.toUpperCase()} "${url}" \\\n  -H "Content-Type: application/json" \\\n  -H "Authorization: Bearer YOUR_API_KEY"`;
+if (body && body !== '{}') {
+  // Format body for curl by adding single quotes around the JSON and collapsing it
+  const collapsedBody = JSON.stringify(JSON.parse(body));
+  curlSnippet += ` \\\n  -d '${collapsedBody}'`;
+}
+
+// Generate Node.js (fetch) snippet
+let nodeSnippet = `const options = {
+  method: '${method.toUpperCase()}',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_API_KEY'
+  }`;
+if (body && body !== '{}') {
+  nodeSnippet += `,\n  body: JSON.stringify(${body.split('\n').join('\n  ')})`;
+}
+nodeSnippet += `\n};\n\nfetch('${url}', options)\n  .then(response => response.json())\n  .then(response => console.log(response))\n  .catch(err => console.error(err));`;
+
+// Generate Python (requests) snippet
+let pythonSnippet = `import requests
+
+url = "${url}"
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_API_KEY"
+}
+`;
+
+if (body && body !== '{}') {
+  pythonSnippet += `\npayload = ${body}\n\nresponse = requests.request("${method.toUpperCase()}", url, json=payload, headers=headers)\n`;
+} else {
+  pythonSnippet += `\nresponse = requests.request("${method.toUpperCase()}", url, headers=headers)\n`;
+}
+
+pythonSnippet += `\nprint(response.text)`;
+---
+
+<Tabs>
+  <TabItem label="cURL" icon="seti:cli">
+    <Code code={curlSnippet} lang="bash" />
+  </TabItem>
+  <TabItem label="Node.js" icon="node">
+    <Code code={nodeSnippet} lang="javascript" />
+  </TabItem>
+  <TabItem label="Python" icon="seti:python">
+    <Code code={pythonSnippet} lang="python" />
+  </TabItem>
+</Tabs>

@@ -6,6 +6,7 @@ description: "API Reference for the User object."
 import ApiField from '@/components/docs/ApiField.astro';
 import Expandable from '@/components/docs/Expandable.astro';
 import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
+import SdkCodeSamples from '@/components/docs/SdkCodeSamples.astro';
 
 ## Schema Properties
 
@@ -40,6 +41,18 @@ import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
 
 </ApiField>
 
+
+## SDK Code Samples
+
+Copy these snippets to integrate the User API into your application.
+
+<SdkCodeSamples method="POST" url="https://api.cloudstart.dev/v1/users" body={JSON.stringify({
+  "id": "...",
+  "email": "...",
+  "role": "...",
+  "createdAt": "...",
+  "metadata": "..."
+}, null, 2)} />
 
 ## Interactive Testing
 

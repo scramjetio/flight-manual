@@ -6,6 +6,7 @@ description: "API Reference for the EnterpriseBilling object."
 import ApiField from '@/components/docs/ApiField.astro';
 import Expandable from '@/components/docs/Expandable.astro';
 import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
+import SdkCodeSamples from '@/components/docs/SdkCodeSamples.astro';
 
 ## Schema Properties
 
@@ -86,6 +87,20 @@ import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
   Arbitrary key-value metadata attached to the invoice.
 </ApiField>
 
+
+## SDK Code Samples
+
+Copy these snippets to integrate the EnterpriseBilling API into your application.
+
+<SdkCodeSamples method="POST" url="https://api.cloudstart.dev/v1/enterprisebillings" body={JSON.stringify({
+  "invoiceId": "...",
+  "status": "...",
+  "totalAmount": "...",
+  "currency": "...",
+  "customer": "...",
+  "lineItems": "...",
+  "metadata": "..."
+}, null, 2)} />
 
 ## Interactive Testing
 

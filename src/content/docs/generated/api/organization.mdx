@@ -6,6 +6,7 @@ description: "API Reference for the Organization object."
 import ApiField from '@/components/docs/ApiField.astro';
 import Expandable from '@/components/docs/Expandable.astro';
 import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
+import SdkCodeSamples from '@/components/docs/SdkCodeSamples.astro';
 
 ## Schema Properties
 
@@ -29,6 +30,18 @@ import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
   Whether the organization has completed domain verification.
 </ApiField>
 
+
+## SDK Code Samples
+
+Copy these snippets to integrate the Organization API into your application.
+
+<SdkCodeSamples method="POST" url="https://api.cloudstart.dev/v1/organizations" body={JSON.stringify({
+  "orgId": "...",
+  "name": "...",
+  "tier": "...",
+  "memberCount": "...",
+  "isVerified": "..."
+}, null, 2)} />
 
 ## Interactive Testing
 

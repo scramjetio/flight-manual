@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Play, Loader2, CheckCircle2, XCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Play, Loader2, CheckCircle2, XCircle, Key } from 'lucide-react';
 
 interface InlinePlaygroundProps {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -12,6 +12,17 @@ export function InlinePlayground({ method = 'GET', url, defaultBody = '' }: Inli
   const [response, setResponse] = useState<string | null>(null);
   const [status, setStatus] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+
+  useEffect(() => {
+    setApiKey(localStorage.getItem('flight-manual-api-key') || '');
+  }, []);
+
+  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setApiKey(val);
+    localStorage.setItem('flight-manual-api-key', val);
+  };
 
   const methodColors = {
     GET: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
@@ -31,6 +42,7 @@ export function InlinePlayground({ method = 'GET', url, defaultBody = '' }: Inli
         method,
         headers: {
           'Content-Type': 'application/json',
+          ...(apiKey ? { 'Authorization': `Bearer ${apiKey}` } : {})
         },
       };
 
@@ -75,6 +87,19 @@ export function InlinePlayground({ method = 'GET', url, defaultBody = '' }: Inli
           {loading ? <Loader2 size={14} className="animate-spin" /> : <Play size={14} className="fill-current" />}
           Send
         </button>
+      </div>
+
+      {/* Auth Input */}
+      <div className="flex items-center gap-2 border-b border-border/60 bg-muted/10 px-4 py-2">
+        <Key size={14} className="text-muted-foreground" />
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider min-w-[100px]">Bearer Token</span>
+        <input 
+          type="password"
+          value={apiKey}
+          onChange={handleApiKeyChange}
+          placeholder="Enter your API key..."
+          className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+        />
       </div>
 
       {/* Body Input */}

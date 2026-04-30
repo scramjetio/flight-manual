@@ -47,6 +47,17 @@ export default defineConfig({
       title: SITE_CONFIG.title,
       tagline: SITE_CONFIG.tagline,
       logo: SITE_CONFIG.logo,
+      defaultLocale: 'root',
+      locales: {
+        root: {
+          label: 'English',
+          lang: 'en',
+        },
+        es: {
+          label: 'Español',
+          lang: 'es',
+        },
+      },
       social: [
         {
           icon: "github",

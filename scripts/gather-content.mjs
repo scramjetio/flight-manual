@@ -92,6 +92,7 @@ description: "API Reference for the ${schemaName} object."
 import ApiField from '@/components/docs/ApiField.astro';
 import Expandable from '@/components/docs/Expandable.astro';
 import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
+import SdkCodeSamples from '@/components/docs/SdkCodeSamples.astro';
 
 ## Schema Properties
 
@@ -110,9 +111,16 @@ import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
     dummyBody[key] = "...";
   }
 
+  const url = `https://api.cloudstart.dev/v1/${schemaName.toLowerCase()}s`;
+  const bodyStr = JSON.stringify(dummyBody, null, 2);
+
+  mdx += `\n## SDK Code Samples\n\n`;
+  mdx += `Copy these snippets to integrate the ${schemaName} API into your application.\n\n`;
+  mdx += `<SdkCodeSamples method="POST" url="${url}" body={JSON.stringify(${bodyStr}, null, 2)} />\n`;
+
   mdx += `\n## Interactive Testing\n\n`;
   mdx += `Use the playground below to simulate creating a new ${schemaName} object. This executes a live \`fetch\` request directly from your browser.\n\n`;
-  mdx += `<InlinePlayground \n  client:load \n  method="POST" \n  url="https://api.cloudstart.dev/v1/${schemaName.toLowerCase()}s" \n  defaultBody={JSON.stringify(${JSON.stringify(dummyBody, null, 2)}, null, 2)} \n/>\n`;
+  mdx += `<InlinePlayground \n  client:load \n  method="POST" \n  url="${url}" \n  defaultBody={JSON.stringify(${bodyStr}, null, 2)} \n/>\n`;
 
   return mdx;
 }
