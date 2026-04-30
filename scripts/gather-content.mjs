@@ -91,6 +91,7 @@ description: "API Reference for the ${schemaName} object."
 
 import ApiField from '@/components/docs/ApiField.astro';
 import Expandable from '@/components/docs/Expandable.astro';
+import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
 
 ## Schema Properties
 
@@ -102,9 +103,16 @@ import Expandable from '@/components/docs/Expandable.astro';
     return mdx + "*(No properties found)*";
   }
 
+  const dummyBody = {};
+
   for (const [key, field] of Object.entries(shape)) {
     mdx += parseField(key, field) + '\n';
+    dummyBody[key] = "...";
   }
+
+  mdx += `\n## Interactive Testing\n\n`;
+  mdx += `Use the playground below to simulate creating a new ${schemaName} object. This executes a live \`fetch\` request directly from your browser.\n\n`;
+  mdx += `<InlinePlayground \n  client:load \n  method="POST" \n  url="https://api.cloudstart.dev/v1/${schemaName.toLowerCase()}s" \n  defaultBody={JSON.stringify(${JSON.stringify(dummyBody, null, 2)}, null, 2)} \n/>\n`;
 
   return mdx;
 }

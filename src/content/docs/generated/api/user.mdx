@@ -5,6 +5,7 @@ description: "API Reference for the User object."
 
 import ApiField from '@/components/docs/ApiField.astro';
 import Expandable from '@/components/docs/Expandable.astro';
+import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
 
 ## Schema Properties
 
@@ -39,3 +40,20 @@ import Expandable from '@/components/docs/Expandable.astro';
 
 </ApiField>
 
+
+## Interactive Testing
+
+Use the playground below to simulate creating a new User object. This executes a live `fetch` request directly from your browser.
+
+<InlinePlayground 
+  client:load 
+  method="POST" 
+  url="https://api.cloudstart.dev/v1/users" 
+  defaultBody={JSON.stringify({
+  "id": "...",
+  "email": "...",
+  "role": "...",
+  "createdAt": "...",
+  "metadata": "..."
+}, null, 2)} 
+/>

@@ -5,6 +5,7 @@ description: "API Reference for the Organization object."
 
 import ApiField from '@/components/docs/ApiField.astro';
 import Expandable from '@/components/docs/Expandable.astro';
+import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
 
 ## Schema Properties
 
@@ -28,3 +29,20 @@ import Expandable from '@/components/docs/Expandable.astro';
   Whether the organization has completed domain verification.
 </ApiField>
 
+
+## Interactive Testing
+
+Use the playground below to simulate creating a new Organization object. This executes a live `fetch` request directly from your browser.
+
+<InlinePlayground 
+  client:load 
+  method="POST" 
+  url="https://api.cloudstart.dev/v1/organizations" 
+  defaultBody={JSON.stringify({
+  "orgId": "...",
+  "name": "...",
+  "tier": "...",
+  "memberCount": "...",
+  "isVerified": "..."
+}, null, 2)} 
+/>
