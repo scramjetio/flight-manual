@@ -6,6 +6,7 @@ description: "A showcase of the premium UI components available in Flight Manual
 import Frame from '@/components/docs/Frame.astro';
 import AccordionGroup from '@/components/docs/AccordionGroup.astro';
 import Accordion from '@/components/docs/Accordion.astro';
+import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
 
 Flight Manual provides a suite of premium, Mintlify-tier UI components built on top of Astro Starlight. These components allow you to create beautiful, interactive documentation out of the box.
 
@@ -53,4 +54,29 @@ import Accordion from '@/components/docs/Accordion.astro';
     No! Flight Manual is 100% open-source...
   </Accordion>
 </AccordionGroup>
+```
+
+## Inline API Playground
+
+The `<InlinePlayground>` component brings your tutorials to life. Instead of forcing users to navigate to a separate API Reference page, you can drop an interactive API tester directly into your MDX content. It executes real `fetch` requests from the browser!
+
+<InlinePlayground 
+  client:load 
+  method="POST" 
+  url="https://jsonplaceholder.typicode.com/posts" 
+  defaultBody={JSON.stringify({ title: 'Flight Manual', body: 'Testing the inline playground!', userId: 1 }, null, 2)} 
+/>
+
+```mdx
+import { InlinePlayground } from '@/components/docs/InlinePlayground.tsx';
+
+<InlinePlayground 
+  client:load 
+  method="POST" 
+  url="https://api.yourdomain.com/v1/users" 
+  defaultBody={`{
+  "email": "developer@example.com",
+  "name": "Jane Doe"
+}`} 
+/>
 ```
