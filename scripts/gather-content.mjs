@@ -1,22 +1,33 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+const IS_CI = process.env.GITHUB_ACTIONS === 'true';
+
+// Helper to resolve the correct path whether running locally or in GitHub Actions
+function getSourcePath(localPath, repoName, filePath) {
+  if (IS_CI) {
+    // In GitHub Actions, we checkout sibling repositories into a folder named after the repo
+    return path.join('..', repoName, filePath);
+  }
+  return localPath;
+}
+
 const SOURCES = [
   {
     name: 'Scramjet',
-    path: '/Users/admin/Work/scram-jet/README.md',
+    path: getSourcePath('/Users/admin/Work/scram-jet/README.md', 'scram-jet', 'README.md'),
     target: 'reference/scramjet.mdx',
     description: 'Universal Capture. Transform. Send.'
   },
   {
     name: 'UberMesh',
-    path: '/Users/admin/Work/ubermesh/README.md',
+    path: getSourcePath('/Users/admin/Work/ubermesh/README.md', 'ubermesh', 'README.md'),
     target: 'reference/ubermesh.mdx',
     description: 'The Content Operating System substrate.'
   },
   {
     name: 'API Mom',
-    path: '/Users/admin/Work/scram-jet/packages/api-mom/README.md',
+    path: getSourcePath('/Users/admin/Work/scram-jet/packages/api-mom/README.md', 'scram-jet', 'packages/api-mom/README.md'),
     target: 'reference/api-mom.mdx',
     description: 'Global API Traffic Controller.'
   }

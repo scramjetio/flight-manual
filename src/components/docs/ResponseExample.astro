@@ -1,0 +1,25 @@
+---
+import { Badge } from "@/components/ui/badge";
+
+interface Props {
+  status: string;
+  title?: string;
+}
+
+const { status, title = "Response" } = Astro.props;
+
+const isSuccess = status.startsWith("2");
+const statusColor = isSuccess ? "bg-green-500/10 text-green-500 border-green-500/20" : "bg-red-500/10 text-red-500 border-red-500/20";
+---
+
+<div class="my-6 border rounded-lg overflow-hidden bg-[#0d1117] shadow-sm">
+  <div class="flex items-center justify-between px-4 py-2 border-b bg-muted/20">
+    <span class="text-sm font-medium text-foreground">{title}</span>
+    <Badge variant="outline" className={`${statusColor} font-mono text-xs px-1.5 py-0`}>
+      {status}
+    </Badge>
+  </div>
+  <div class="p-4 overflow-x-auto text-sm text-gray-300 font-mono">
+    <slot />
+  </div>
+</div>

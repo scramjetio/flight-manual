@@ -1,0 +1,40 @@
+---
+title: "ParamTable"
+description: "Structured markdown tables for configurations."
+---
+
+import ParamTable from '@/components/docs/ParamTable.astro';
+
+While standard Markdown tables work, they often lack the CSS scoping required to look good inside a premium dark theme. The `<ParamTable>` component wraps your markdown table in a specialized `div` that applies custom borders, muted headers, and hover row styling.
+
+## Usage
+
+```html
+import ParamTable from '@/components/docs/ParamTable.astro';
+
+&lt;ParamTable title="Agent Configuration"&gt;
+
+| Setting | Type | Description |
+|---|---|---|
+| `temperature` | `number` | Controls the randomness of the model output. |
+| `max_tokens` | `number` | The maximum length of the response. |
+
+&lt;/ParamTable&gt;
+```
+
+## Preview
+
+<ParamTable title="Agent Configuration">
+
+| Setting | Type | Description |
+|---|---|---|
+| `temperature` | `number` | Controls the randomness of the model output. |
+| `max_tokens` | `number` | The maximum length of the response. |
+
+</ParamTable>
+
+## Properties
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | No | The header title for the table. Defaults to "Parameters". |

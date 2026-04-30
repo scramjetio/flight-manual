@@ -3,9 +3,8 @@
   <img src=".github/assets/hero.png" alt="FlightManual Hero Image" width="600">
   
   <h1>FlightManual</h1>
-  <p><strong>A premium, open-source documentation engine for the agentic era.</strong></p>
-  <p>Get Mintlify-tier aesthetics and instant local search, natively optimized for Cloudflare Pages. 100% free.</p>
-
+  <p><strong>The production-grade, self-documenting framework featuring Edge RBAC, CI/CD automation, and a native AI Agent.</strong></p>
+  
   <!-- The 6-Badge Array -->
   <a href="https://flightmanual.scramjet.io" target="_blank"><img src="https://img.shields.io/badge/Live-Demo-2ecc71?style=flat-square&logo=cloudflarepages&logoColor=white" alt="Live Demo"></a>
   <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/scramjetio/flight-manual"><img src="https://img.shields.io/badge/Deploy-Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Deploy to Cloudflare"></a>
@@ -17,81 +16,59 @@
 
 ---
 
-## ⚡️ Why FlightManual?
+## ⚡️ The Problem
+Existing documentation templates (like Docusaurus or vanilla Astro) are too basic. You are forced to manually write and maintain your API schemas. They offer no built-in access-control (RBAC) for enterprise clients, and you have to pay third-party SaaS vendors $100+/month just to get a floating AI chatbot like Mintlify or Markprompt.
 
-Most documentation frameworks look like they were built in 2010. The ones that look modern are expensive, proprietary SaaS products that lock you in.
-
-**FlightManual** bridges the gap. Built on top of [Astro Starlight](https://starlight.astro.build/), we've layered a premium dark-mode design system, interactive API playgrounds, and AI-native exports out-of-the-box. 
-
-### Features
-- 🎨 **Premium Aesthetics:** Deep dark mode, Inter typography, and glassmorphism components.
-- 🔍 **Instant Search:** Client-side, zero-config search powered by Pagefind.
-- 🛠 **API Ready:** Interactive API reference generation powered by Scalar.
-- 🤖 **AI-Native:** Automatically generates `/llms.txt` and `/llms-full.txt` during the build process so AI agents can read your docs instantly.
-- 🚀 **0ms Latency:** Configured specifically for deployment to Cloudflare Pages edge network.
+## 🌟 The Solution (FlightManual)
+FlightManual is an open-source, "Venture-Backed SaaS" grade documentation engine built on top of Astro Starlight. It solves the enterprise documentation problem natively:
+* **CI/CD Automation**: GitHub Actions automatically pull schemas from your backend repos and open Pull Requests.
+* **Edge RBAC**: Cloudflare Pages Middleware locks down private `/enterprise` directories at the edge.
+* **Native Stateful AI**: A fully integrated Chatbot powered by `assistant-ui` and Cloudflare Durable Objects. You own the Vectorize database and the Llama 3 compute, paying $0 to third-party wrappers.
 
 ## 🎥 In Action
-> **[TODO]:** Insert a 5-second WebP or GIF here showing the interactive API playground or instant search in action.
+> **[TODO]:** Insert a 5-second WebP or GIF here showing the UI being interacted with.
 *(Placeholder: `<img src=".github/assets/demo.webp" alt="Demo" width="100%">`)*
 
 ## 🚀 Quick Start
 
 **Prerequisites:** Node.js >= 18.0
 
-Deploy your own premium documentation site in seconds:
-
 ```bash
-git clone https://github.com/scramjetio/flight-manual.git my-docs
-cd my-docs
+git clone https://github.com/scramjetio/flight-manual.git
+cd flight-manual
 npm install
 npm run dev
 ```
-Your docs are now running at `http://localhost:4321`.
 
-## 📂 Project Structure
-
-- `src/content/docs/`: Write your markdown (`.md` or `.mdx`) files here.
-- `src/styles/custom.css`: The central design system. Tweak colors and typography here.
-- `astro.config.mjs`: Configure your sidebar, branding, and site metadata.
-
-## 🤖 The Trojan Horse: Powered by Scramjet
-
-Writing docs manually is tedious. FlightManual is designed to be the "Publishing Surface" for **Scramjet**, our event-driven content pipeline.
-
-If you don't want to write docs by hand, you can use Scramjet to:
-1. Watch your GitHub Repositories.
-2. Extract your TypeScript/OpenAPI types.
-3. Automatically write `.mdx` files using AI.
-4. Commit them directly into this repository.
-
-*Learn more about automating your documentation with Scramjet [here](https://scramjet.io).*
+To enable the AI Agent and Vector DB integration, create your database and deploy:
+```bash
+npx wrangler vectorize create flight-manual-docs --dimensions=768 --metric=cosine
+npm run deploy
+```
 
 <details>
 <summary><strong>🗺️ View Architecture Diagram</strong></summary>
 
 ```mermaid
-sequenceDiagram
-    participant Codebase Repo
-    participant Scramjet AI
-    participant FlightManual Repo
-    participant Cloudflare Pages
+graph TD
+    subgraph GitHub
+        A[Backend Repos] -->|GitHub Actions| B(FlightManual Repo)
+        B -->|Auto-PR| C{Docs Updated}
+    end
 
-    Codebase Repo->>Scramjet AI: Developer pushes new TypeScript Types
-    Scramjet AI->>Scramjet AI: Extracts Types & Writes Docs
-    Scramjet AI->>FlightManual Repo: Commits updated .mdx files
-    FlightManual Repo->>Cloudflare Pages: Triggers Build
-    Cloudflare Pages-->>Users: Serves updated Docs + /llms.txt
+    subgraph Cloudflare Pages
+        C -->|Deploy| D[Astro Static Site]
+        D -->|/enterprise| E[Edge Middleware RBAC]
+        D -->|/api/chat| F[Edge Agent Router]
+    end
+
+    subgraph Cloudflare Workers
+        F <--> G[(Durable Object: DocsAgent)]
+        G <--> H[Workers AI: Llama 3]
+        G <--> I[(Vectorize DB)]
+    end
 ```
 </details>
-
-## ☁️ Deployment
-
-This project is pre-configured for **Cloudflare Pages**.
-
-1. Push this repository to GitHub.
-2. Go to the Cloudflare Dashboard -> Pages -> Connect to Git.
-3. Build command: `npm run build`
-4. Build output directory: `dist`
 
 ## 📄 License
 MIT © The Scramjet Team

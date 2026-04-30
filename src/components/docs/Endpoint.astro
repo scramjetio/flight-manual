@@ -1,0 +1,27 @@
+---
+import { Badge } from "@/components/ui/badge";
+
+interface Props {
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  path: string;
+}
+
+const { method, path } = Astro.props;
+
+const methodColors: Record<string, string> = {
+  GET: "bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 border-blue-500/20",
+  POST: "bg-green-500/10 text-green-500 hover:bg-green-500/20 border-green-500/20",
+  PUT: "bg-orange-500/10 text-orange-500 hover:bg-orange-500/20 border-orange-500/20",
+  DELETE: "bg-red-500/10 text-red-500 hover:bg-red-500/20 border-red-500/20",
+  PATCH: "bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20 border-yellow-500/20",
+};
+
+const colorClass = methodColors[method.toUpperCase()] || "bg-gray-500/10 text-gray-500";
+---
+
+<div class="flex items-center gap-3 my-6 p-2 rounded-md border bg-muted/30 font-mono text-sm">
+  <Badge variant="outline" className={`${colorClass} font-bold px-2 py-0.5`}>
+    {method.toUpperCase()}
+  </Badge>
+  <span class="text-foreground">{path}</span>
+</div>

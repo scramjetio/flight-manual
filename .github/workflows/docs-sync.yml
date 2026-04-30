@@ -1,0 +1,60 @@
+name: Docs Sync Pipeline
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+  repository_dispatch:
+    types: [scramjet_schema_update]
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout FlightManual
+        uses: actions/checkout@v4
+        with:
+          path: flight-manual
+          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Scramjet Source
+        uses: actions/checkout@v4
+        with:
+          repository: scramjetio/scram-jet
+          path: scram-jet
+          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          
+      - name: Checkout UberMesh Source
+        uses: actions/checkout@v4
+        with:
+          repository: scramjetio/ubermesh
+          path: ubermesh
+          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Scramjet Pipeline
+        working-directory: ./flight-manual
+        run: |
+          npm ci
+          node scripts/gather-content.mjs
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          path: ./flight-manual
+          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          commit-message: "docs: sync automated schemas"
+          title: "docs: sync automated schemas"
+          body: |
+            ### Scramjet Pipeline Update
+            Automated schema extraction detected changes in the upstream backend repositories.
+            
+            This PR updates the MDX documentation to reflect the latest Zod schemas and APIs.
+          branch: auto/docs-sync
+          base: main
+          delete-branch: true
+          labels: automation, documentation

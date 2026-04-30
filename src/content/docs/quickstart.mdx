@@ -1,92 +1,59 @@
 ---
-title: Quickstart
-description: Get your documentation site running in under 5 minutes.
+title: "Quickstart"
+description: "Get started with FlightManual in under 5 minutes."
 ---
 
-import { Steps, Tabs, TabItem, Aside } from "@astrojs/starlight/components";
+Welcome to **FlightManual**! This guide will help you spin up your own open-source, Mintlify-tier developer portal in minutes.
 
-Get a beautiful, AI-ready documentation site running in minutes.
+import { Steps } from '@astrojs/starlight/components';
+import Callout from '@/components/docs/Callout.astro';
 
-## Prerequisites
-
-- Node.js 18+
-- A GitHub repository for your project
-
-## Setup
+<Callout type="warning" title="Prerequisites">
+  Before you begin, ensure you have **Node.js (v18 or higher)** and `npm` or `pnpm` installed.
+</Callout>
 
 <Steps>
+1. **Clone the Engine**
 
-1. **Clone the starter**
+   FlightManual is a self-contained Astro project. To get started, clone the repository:
 
    ```bash
-   npx create-astro@latest my-docs -- --template garywu/docs-starter
+   git clone https://github.com/scramjetio/flight-manual.git my-docs
    cd my-docs
    ```
 
-2. **Configure your project**
+2. **Install Dependencies**
 
-   Edit `astro.config.mjs` and update the `SITE_CONFIG` object:
-
-   ```js
-   const SITE_CONFIG = {
-     title: "My Project",
-     tagline: "Your project description here.",
-     githubUrl: "https://github.com/your-org/your-repo",
-   };
-   ```
-
-3. **Add your OpenAPI spec** (optional)
-
-   Drop your `openapi.json` or `openapi.yaml` into the `public/` directory.
-   The API playground at `/api-reference` will automatically use it.
-
-4. **Start writing docs**
-
-   Add MDX files to `src/content/docs/`:
+   Install the necessary dependencies to pull down Astro, Starlight, Tailwind CSS v4, and our Shadcn components:
 
    ```bash
-   src/content/docs/
-   ├── index.mdx           # Landing page
-   ├── quickstart.mdx       # This page
-   ├── concepts/
-   │   └── architecture.mdx # Architecture docs
-   └── guides/
-       └── deployment.mdx   # How-to guides
+   npm install
    ```
 
-5. **Preview locally**
+3. **Start the Development Server**
+
+   Boot up the local Vite development server to see your documentation in real-time.
 
    ```bash
    npm run dev
    ```
 
-   Open [http://localhost:4321](http://localhost:4321) to see your site.
+   Navigate to `http://localhost:4321` in your browser. Any changes you make to the `.mdx` files in `src/content/docs/` will automatically hot-reload.
 
-6. **Deploy to Cloudflare Pages**
+4. **Customize Your Docs**
+
+   Now that you have the engine running, it's time to make it your own:
+   - **Edit Content**: Open `src/content/docs/index.mdx` to change the landing page.
+   - **Configuration**: Head over to our [Configuration Guide](/configuration/) to learn how to update the `astro.config.mjs` file with your own logo.
+   - **Use Components**: Check out the [Component Showcase](/components/api-field/) to see how to document APIs beautifully.
+
+5. **Build for Production**
+
+   When you are ready to ship, run the production build command:
 
    ```bash
    npm run build
-   npx wrangler pages deploy dist/
    ```
 
+   This generates a highly optimized static site in the `dist/` folder, complete with a `sitemap-index.xml` and an AI-ready `llms.txt` file. You can deploy this folder directly to Cloudflare Pages.
 </Steps>
-
-## What You Get
-
-| Feature | Status | Notes |
-|---|---|---|
-| Full-text search | ✅ Automatic | Pagefind — zero config |
-| API playground | ✅ Drop-in | Add `openapi.json` to `public/` |
-| `llms.txt` | ✅ Auto-generated | Built at deploy time |
-| Dark/light mode | ✅ Built-in | Starlight default |
-| Analytics | ✅ Optional | Add CF Web Analytics token |
-
-<Aside type="tip">
-  Edit `src/styles/custom.css` to change the accent color and typography for your brand.
-</Aside>
-
-## Next Steps
-
-- Read the [Architecture](/concepts/architecture/) guide to understand the stack
-- Check out the [API Reference](/api-reference/) playground
-- Learn about the [llms.txt specification](https://llmstxt.org)

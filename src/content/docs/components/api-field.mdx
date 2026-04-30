@@ -1,0 +1,45 @@
+---
+title: "ApiField"
+description: "Document properties, schemas, and API request bodies."
+---
+
+import ApiField from '@/components/docs/ApiField.astro';
+
+The `<ApiField>` component is the workhorse of your documentation. It is designed to cleanly display the keys, types, and descriptions of complex data objects and schemas.
+
+## Usage
+
+You can use the component by importing it at the top of your `.mdx` file.
+
+```html
+import ApiField from '@/components/docs/ApiField.astro';
+
+&lt;ApiField name="user_id" type="string" required&gt;
+
+  The unique identifier for the user account.
+
+&lt;/ApiField&gt;
+```
+
+## Preview
+
+<ApiField name="user_id" type="string" required>
+
+  The unique identifier for the user account. Must be a valid UUID v4.
+
+</ApiField>
+
+<ApiField name="preferences" type="object" defaultValue="{}">
+
+  A nested object containing the user's notification and theme settings.
+
+</ApiField>
+
+## Properties
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | **Yes** | The name of the parameter or key. |
+| `type` | `string` | **Yes** | The data type (e.g., `string`, `number`, `boolean`, `Array<string>`). |
+| `required` | `boolean` | No | If true, displays a red "REQUIRED" badge. Defaults to `false` (displays "OPTIONAL"). |
+| `defaultValue` | `string` | No | Renders a small tag showing the default value if the key is omitted. |

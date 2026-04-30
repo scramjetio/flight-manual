@@ -1,0 +1,55 @@
+---
+title: "Callouts"
+description: "Highlight important information with premium alerts."
+---
+
+import Callout from '@/components/docs/Callout.astro';
+
+When you need to draw attention to important information, warnings, or destructive actions, standard Markdown blockquotes aren't enough. The `<Callout>` component provides a premium, customized alternative to Starlight's default asides.
+
+## Usage
+
+```mdx
+import Callout from '@/components/docs/Callout.astro';
+
+<Callout type="info" title="Did you know?">
+  FlightManual uses Shadcn UI primitives under the hood.
+</Callout>
+
+<Callout type="warning">
+  This API endpoint is deprecated and will be removed in v2.0.
+</Callout>
+
+<Callout type="success" title="Deployment Successful">
+  Your documentation is now live on Cloudflare Pages!
+</Callout>
+
+<Callout type="danger">
+  Deleting a user account is permanent and cannot be undone.
+</Callout>
+```
+
+## Preview
+
+<Callout type="info" title="Did you know?">
+  FlightManual uses Shadcn UI primitives under the hood.
+</Callout>
+
+<Callout type="warning">
+  This API endpoint is deprecated and will be removed in v2.0.
+</Callout>
+
+<Callout type="success" title="Deployment Successful">
+  Your documentation is now live on Cloudflare Pages!
+</Callout>
+
+<Callout type="danger">
+  Deleting a user account is permanent and cannot be undone.
+</Callout>
+
+## Properties
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `type` | `"info" \| "warning" \| "success" \| "danger"` | No | The style variant of the callout. Defaults to `"info"`. |
+| `title` | `string` | No | Overrides the default title (e.g., changing "Warning" to something custom). |

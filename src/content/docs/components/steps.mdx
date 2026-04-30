@@ -1,0 +1,52 @@
+---
+title: "Steps"
+description: "Create beautiful, connected vertical timelines for tutorials."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+When writing integration guides or quickstarts, standard numbered lists can feel overwhelming if the steps are long. The `<Steps>` component renders a connected vertical timeline that guides the reader's eye down the page.
+
+## Usage
+
+You can use the built-in Starlight `<Steps>` component by wrapping a standard Markdown ordered list.
+
+```html
+import { Steps } from '@astrojs/starlight/components';
+
+&lt;Steps&gt;
+1. **Install the package**
+   
+   Run the following command to install the SDK:
+   ```bash
+   npm install scramjet-node
+   ```
+
+2. **Initialize the client**
+   
+   Create a new instance using your API key.
+
+3. **Make a request**
+   
+   Call the API endpoint.
+&lt;/Steps&gt;
+```
+
+## Preview
+
+import { Code } from '@astrojs/starlight/components';
+
+<Steps>
+1. **Install the package**
+   
+   Run the following command to install the SDK:
+   <Code code={`npm install scramjet-node`} lang="bash" />
+
+2. **Initialize the client**
+   
+   Create a new instance using your API key.
+
+3. **Make a request**
+   
+   Call the API endpoint.
+</Steps>

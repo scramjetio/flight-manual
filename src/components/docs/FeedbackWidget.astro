@@ -1,0 +1,55 @@
+---
+import { ThumbsUp, ThumbsDown } from "lucide-react";
+---
+
+<div class="feedback-widget mt-16 pt-8 border-t border-border flex items-center justify-between">
+  <p class="text-sm font-medium text-foreground/80">Was this page helpful?</p>
+  <div class="flex gap-2" id="feedback-buttons">
+    <button 
+      class="feedback-btn flex items-center justify-center h-8 w-8 rounded-md border border-border bg-muted/20 hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" 
+      data-vote="up"
+      aria-label="Yes"
+    >
+      <ThumbsUp size={16} />
+    </button>
+    <button 
+      class="feedback-btn flex items-center justify-center h-8 w-8 rounded-md border border-border bg-muted/20 hover:bg-muted transition-colors text-muted-foreground hover:text-foreground" 
+      data-vote="down"
+      aria-label="No"
+    >
+      <ThumbsDown size={16} />
+    </button>
+  </div>
+  <p id="feedback-thanks" class="text-sm text-green-500 font-medium hidden">Thank you for your feedback!</p>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.feedback-btn');
+    const buttonContainer = document.getElementById('feedback-buttons');
+    const thanksMessage = document.getElementById('feedback-thanks');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const vote = button.getAttribute('data-vote');
+        const path = window.location.pathname;
+
+        try {
+          await fetch('/api/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path, vote })
+          });
+
+          // Hide buttons and show thanks
+          if (buttonContainer && thanksMessage) {
+            buttonContainer.style.display = 'none';
+            thanksMessage.classList.remove('hidden');
+          }
+        } catch (error) {
+          console.error("Failed to submit feedback", error);
+        }
+      });
+    });
+  });
+</script>

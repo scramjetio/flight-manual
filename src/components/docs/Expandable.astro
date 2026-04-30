@@ -1,0 +1,28 @@
+---
+import { ChevronRight } from "lucide-react";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Show Details" } = Astro.props;
+---
+
+<details class="group my-4 border rounded-md overflow-hidden bg-muted/10 open:bg-muted/20 transition-colors">
+  <summary class="flex items-center gap-2 px-4 py-3 cursor-pointer list-none font-medium text-sm text-foreground/80 hover:text-foreground">
+    <div class="transition-transform duration-200 group-open:rotate-90">
+      <ChevronRight size={16} />
+    </div>
+    {title}
+  </summary>
+  <div class="px-4 pb-4 pt-1 text-sm text-muted-foreground prose prose-sm dark:prose-invert max-w-none border-t border-border/50">
+    <slot />
+  </div>
+</details>
+
+<style>
+  /* Hide the default details arrow in webkit */
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

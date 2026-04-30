@@ -1,0 +1,52 @@
+---
+title: "ResponseExample"
+description: "Display mock JSON payloads with status codes."
+---
+
+import ResponseExample from '@/components/docs/ResponseExample.astro';
+
+When showing developers what an API request returns, it's helpful to wrap the JSON snippet in a dedicated visual container that clearly states the HTTP response code.
+
+## Usage
+
+```html
+import ResponseExample from '@/components/docs/ResponseExample.astro';
+
+&lt;ResponseExample status="200 OK" title="User Object"&gt;
+
+```json
+{
+  "id": "usr_12345",
+  "email": "flight@manual.dev",
+  "active": true
+}
+```
+
+&lt;/ResponseExample&gt;
+```
+
+## Preview
+
+<ResponseExample status="200 OK" title="User Object">
+{`{
+  "id": "usr_12345",
+  "email": "flight@manual.dev",
+  "active": true
+}`}
+</ResponseExample>
+
+<ResponseExample status="404 Not Found" title="Error Payload">
+{`{
+  "error": {
+    "code": "not_found",
+    "message": "The requested user ID does not exist."
+  }
+}`}
+</ResponseExample>
+
+## Properties
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `status` | `string` | **Yes** | The HTTP status code and message. If it starts with "2", the badge turns green. Otherwise, it turns red. |
+| `title` | `string` | No | A custom title for the header. Defaults to "Response". |

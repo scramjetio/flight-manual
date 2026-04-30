@@ -1,0 +1,65 @@
+---
+title: "Code Tabs"
+description: "Display multi-language code snippets."
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+When your developers use different languages (like Python, Node.js, and cURL), you should provide examples for all of them without cluttering the page. 
+
+The Code Tabs component solves this by rendering a sleek, interactive tabbed interface.
+
+## Usage
+
+You can use the built-in Starlight `<Tabs>` component. Wrap your code blocks inside `<TabItem>` tags.
+
+```html
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+&lt;Tabs&gt;
+  &lt;TabItem label="cURL"&gt;
+
+    ```bash
+    curl -X GET "https://api.scramjet.io/v1/users" \
+      -H "Authorization: Bearer YOUR_API_KEY"
+    ```
+
+  &lt;/TabItem&gt;
+  &lt;TabItem label="Node.js"&gt;
+
+    ```javascript
+    import { Scramjet } from 'scramjet-node';
+
+    const client = new Scramjet('YOUR_API_KEY');
+    const users = await client.users.list();
+    ```
+
+  &lt;/TabItem&gt;
+  &lt;TabItem label="Python"&gt;
+
+    ```python
+    import scramjet
+
+    client = scramjet.Client(api_key="YOUR_API_KEY")
+    users = client.users.list()
+    ```
+
+  &lt;/TabItem&gt;
+&lt;/Tabs&gt;
+```
+
+## Preview
+
+import { Code } from '@astrojs/starlight/components';
+
+<Tabs>
+  <TabItem label="cURL">
+    <Code code={`curl -X GET "https://api.scramjet.io/v1/users" \\\n  -H "Authorization: Bearer YOUR_API_KEY"`} lang="bash" />
+  </TabItem>
+  <TabItem label="Node.js">
+    <Code code={`import { Scramjet } from 'scramjet-node';\n\nconst client = new Scramjet('YOUR_API_KEY');\nconst users = await client.users.list();`} lang="javascript" />
+  </TabItem>
+  <TabItem label="Python">
+    <Code code={`import scramjet\n\nclient = scramjet.Client(api_key="YOUR_API_KEY")\nusers = client.users.list()`} lang="python" />
+  </TabItem>
+</Tabs>

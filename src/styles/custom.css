@@ -108,6 +108,28 @@ html {
   scroll-behavior: smooth;
 }
 
+/* --- Steps (Timeline) Polish --- */
+.sl-markdown-content .sl-steps {
+  --sl-step-border: var(--sl-color-gray-5);
+  margin-left: 1rem;
+}
+
+.sl-markdown-content .sl-steps > li {
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+
+.sl-markdown-content .sl-steps > li::before {
+  background-color: var(--sl-color-black);
+  border: 2px solid var(--sl-color-gray-5);
+  color: var(--sl-color-white);
+  font-weight: 600;
+  width: 2rem;
+  height: 2rem;
+  left: calc(-1rem - 1px);
+  margin-top: -0.25rem;
+}
+
 /* --- Mobile Refinements --- */
 @media (max-width: 50rem) {
   .hero h1 {

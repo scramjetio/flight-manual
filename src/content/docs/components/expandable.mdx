@@ -1,0 +1,44 @@
+---
+title: "Expandable"
+description: "Progressive disclosure for massive payloads."
+---
+
+import Expandable from '@/components/docs/Expandable.astro';
+
+When documenting enterprise APIs, response objects and configuration files can easily span hundreds of lines. Instead of forcing users to scroll past massive code blocks, use the `<Expandable>` component to hide the content behind a sleek, clickable accordion.
+
+## Usage
+
+```html
+import Expandable from '@/components/docs/Expandable.astro';
+
+&lt;Expandable title="View full JSON payload"&gt;
+  ```json
+  {
+    "id": "usr_123",
+    "metadata": {
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-02T00:00:00Z",
+      "flags": {
+        "beta_tester": true,
+        "premium": false
+      }
+    }
+  }
+  ```
+&lt;/Expandable&gt;
+```
+
+## Preview
+
+import { Code } from '@astrojs/starlight/components';
+
+<Expandable title="View full JSON payload">
+  <Code code={`{\n  "id": "usr_123",\n  "metadata": {\n    "created_at": "2024-01-01T00:00:00Z",\n    "updated_at": "2024-01-02T00:00:00Z",\n    "flags": {\n      "beta_tester": true,\n      "premium": false\n    }\n  }\n}`} lang="json" />
+</Expandable>
+
+## Properties
+
+| Prop | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | No | The text displayed on the clickable trigger. Defaults to "Show Details". |
