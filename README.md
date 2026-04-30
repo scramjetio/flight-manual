@@ -25,6 +25,18 @@ Flight Manual is an open-source, "Venture-Backed SaaS" grade documentation engin
 * **Edge RBAC**: Cloudflare Pages Middleware locks down private `/enterprise` directories at the edge.
 * **Native Stateful AI**: A fully integrated Chatbot powered by `assistant-ui` and Cloudflare Durable Objects. You own the Vectorize database and the Llama 3 compute, paying $0 to third-party wrappers.
 
+## ⚖️ Why Flight Manual vs Enterprise Platforms?
+
+Flight Manual occupies a unique position in the documentation ecosystem. It is the only platform that combines self-hosted open-source software, Cloudflare-native edge deployment, AI-native exports (`llms.txt`), and an integrated content pipeline.
+
+| Advantage | Why It Matters |
+|-----------|---------------|
+| **$0 Cost** | Mintlify and Fern cost hundreds of dollars a month. Flight Manual is free forever. |
+| **No Vendor Lock-in** | Plain MDX files in Git. You own your content and can switch frameworks anytime. |
+| **Cloudflare-Native** | 0ms Time-to-First-Byte at 300+ edge locations. No cold starts. |
+| **AI-Native from Day 1** | `/llms.txt` and semantic data are built-in, not an afterthought. |
+| **Pipeline-Driven** | Auto-generate docs from your backend source code using the Scramjet pipeline. |
+
 ## 🎥 In Action
 > **[TODO]:** Insert a 5-second WebP or GIF here showing the UI being interacted with.
 *(Placeholder: `<img src=".github/assets/demo.webp" alt="Demo" width="100%">`)*

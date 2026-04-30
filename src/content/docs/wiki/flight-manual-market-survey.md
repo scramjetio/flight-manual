@@ -41,7 +41,7 @@ description: Competitive landscape analysis of documentation engines and platfor
 | Capability | FlightManual | Mintlify | Fern | Markdoc | Docusaurus | GitBook | ReadMe | Redocly | Scalar |
 |------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Premium dark theme | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ | ✅ | ⚠️ | ✅ |
-| Component library size | ~5 | 30+ | 20+ | 20+ | 15+ | N/A | N/A | 10+ | 5 |
+| Component library size | 10+ | 30+ | 20+ | 20+ | 15+ | N/A | N/A | 10+ | 5 |
 | Brand config file | ⚠️ | ✅ `mint.json` | ✅ `fern.config` | ❌ | ✅ `docusaurus.config` | ✅ | ✅ | ✅ `redocly.yaml` | ✅ |
 | Custom CSS control | ✅ Full | ⚠️ Limited | ⚠️ Limited | ✅ Full | ✅ Full | ❌ | ❌ | ✅ | ✅ |
 
@@ -54,14 +54,14 @@ description: Competitive landscape analysis of documentation engines and platfor
 | SDK code samples | ❌ | ❌ | ✅ Multi-lang | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
 | SDK generation | ❌ | ❌ | ✅ 9 languages | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | API key auto-fill | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
-| Feedback widget | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Feedback widget | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ |
 
 ### 4. Search & AI
 
 | Capability | FlightManual | Mintlify | Fern | Markdoc | Docusaurus | GitBook | ReadMe | Redocly | Scalar |
 |------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Full-text search | ✅ Pagefind | ✅ AI semantic | ✅ AI search | ✅ Algolia | ✅ Algolia | ✅ | ✅ | ✅ | ❌ |
-| AI chat assistant | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| AI chat assistant | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ |
 | `/llms.txt` generation | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | MCP server | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
