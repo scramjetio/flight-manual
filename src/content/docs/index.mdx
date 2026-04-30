@@ -16,11 +16,20 @@ hero:
       icon: external
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard, Tabs, TabItem, Code } from '@astrojs/starlight/components';
 
-## Why FlightManual?
+## Explore the Documentation
 
-FlightManual is a completely open-source, edge-ready documentation framework designed to go toe-to-toe with enterprise platforms like Mintlify and ReadMe. Built on Astro Starlight, it brings a premium developer experience, integrated API playgrounds, and a fully customizable Shadcn UI component library to your documentation.
+<CardGrid>
+  <LinkCard title="Quickstart Guide" description="Install Flight Manual and deploy your first AI-native docs site in 5 minutes." href="/quickstart/" />
+  <LinkCard title="Architecture Setup" description="Learn how the Edge RBAC and Cloudflare Durable Objects are wired together." href="/configuration/" />
+</CardGrid>
+
+---
+
+## Why Flight Manual?
+
+Flight Manual is a completely open-source, edge-ready documentation framework designed to go toe-to-toe with enterprise platforms like Mintlify and ReadMe. Built on Astro Starlight, it brings a premium developer experience, integrated API playgrounds, and a fully customizable Shadcn UI component library to your documentation.
 
 <CardGrid stagger>
 	<Card title="Mintlify-Tier DX" icon="setting">
@@ -47,9 +56,7 @@ FlightManual is a completely open-source, edge-ready documentation framework des
 
 ## The Ultimate DX, Out of the Box
 
-FlightManual gives you premium components like interactive Code Tabs without the enterprise price tag.
-
-import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
+Flight Manual gives you premium components like interactive Code Tabs without the enterprise price tag.
 
 <Tabs>
   <TabItem label="Install with npm">

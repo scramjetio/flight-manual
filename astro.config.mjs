@@ -17,7 +17,7 @@ import { cfAnalytics } from "./integrations/analytics";
 
 const SITE_CONFIG = {
   // --- Required ---
-  title: "FlightManual",
+  title: "Flight Manual",
   tagline: "The Modern Content Substrate for the AI Era.",
   githubUrl: "https://github.com/scramjetio/flight-manual",
 

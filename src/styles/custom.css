@@ -34,6 +34,12 @@
   --sl-color-accent-high: #312e81;
 }
 
+/* --- Global Body Glow --- */
+body {
+  background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.12) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
 /* Custom Component Styles */
 .hero {
   padding-top: 4rem;
@@ -43,7 +49,7 @@
 .hero h1 {
   font-weight: 800;
   letter-spacing: -0.025em;
-  background: linear-gradient(to bottom right, var(--sl-color-white), var(--sl-color-gray-3));
+  background: linear-gradient(to bottom right, var(--sl-color-white), var(--sl-color-accent-high));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -93,14 +99,20 @@ nav.sidebar a[aria-current="page"] {
 }
 
 /* --- Link Cards --- */
-.card-grid .card {
+.card-grid .card, .sl-link-card {
   border-radius: 0.75rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
-.card-grid .card:hover {
-  border-color: var(--sl-color-accent);
-  box-shadow: 0 0 0 1px var(--sl-color-accent);
+.card-grid .card:hover, .sl-link-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2), 0 0 0 1px rgba(99, 102, 241, 0.5);
+  transform: translateY(-2px);
 }
 
 /* --- Smooth Scrolling --- */
