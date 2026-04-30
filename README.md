@@ -1,6 +1,6 @@
 <!-- The Visual Hook -->
 <div align="center">
-  <img src=".github/assets/flight-manual-banner.png" alt="Flight Manual Hero Image" width="600">
+  <img src=".github/assets/flight-manual-cockpit.png" alt="Flight Manual Hero Image" width="800">
   
   <h1>Flight Manual</h1>
   <p><strong>The production-grade, self-documenting framework featuring Edge RBAC, CI/CD automation, and a native AI Agent.</strong></p>
