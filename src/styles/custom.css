@@ -113,7 +113,6 @@ nav.sidebar a[aria-current="page"] {
 :root[data-theme='light'] .sl-link-card {
   border-radius: 0.75rem;
   transition: all 0.2s ease;
-  background: var(--sl-color-gray-1);
 }
 :root[data-theme='light'] .card-grid .card:hover, 
 :root[data-theme='light'] .sl-link-card:hover {
