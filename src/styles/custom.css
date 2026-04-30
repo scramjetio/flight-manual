@@ -25,9 +25,9 @@
   --sl-color-accent-high: #312e81;
 }
 
-/* --- Global Body Glow (Dark Mode Only) --- */
-:root:not([data-theme='light']) body {
-  background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.12) 0%, transparent 60%);
+/* --- Global Body Glow --- */
+body {
+  background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.25) 0%, transparent 60%), var(--sl-color-bg);
   background-attachment: fixed;
 }
 
@@ -89,35 +89,40 @@ nav.sidebar a[aria-current="page"] {
   border-left-width: 4px;
 }
 
-/* --- Link Cards (Dark Mode Only) --- */
+/* --- Link Cards (Dark Mode) --- */
 :root:not([data-theme='light']) .card-grid .card, 
 :root:not([data-theme='light']) .sl-link-card {
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
 }
 
 :root:not([data-theme='light']) .card-grid .card:hover, 
 :root:not([data-theme='light']) .sl-link-card:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(99, 102, 241, 0.5);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2), 0 0 0 1px rgba(99, 102, 241, 0.5);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(99, 102, 241, 0.8);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.4), 0 0 0 1px rgba(99, 102, 241, 0.8);
+  transform: translateY(-3px);
 }
 
 /* Light Mode Fallbacks */
 :root[data-theme='light'] .card-grid .card, 
 :root[data-theme='light'] .sl-link-card {
   border-radius: 0.75rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 :root[data-theme='light'] .card-grid .card:hover, 
 :root[data-theme='light'] .sl-link-card:hover {
   border-color: var(--sl-color-accent);
-  box-shadow: 0 0 0 1px var(--sl-color-accent);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2), 0 0 0 1px var(--sl-color-accent);
+  transform: translateY(-3px);
 }
 
 /* --- Smooth Scrolling --- */
