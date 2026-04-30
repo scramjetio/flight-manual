@@ -1,42 +1,83 @@
 ---
-title: "Enterprise SSO via Cloudflare Access"
-description: "How to protect your internal documentation using Cloudflare Zero Trust (Access) for Okta/SAML integration."
+title: "SSO via Cloudflare Access"
+description: "How to protect your internal documentation using Cloudflare Zero Trust for Okta/SAML integration."
 ---
 
-While Flight Manual is fully open-source, you can easily deploy it with **Enterprise-grade Single Sign-On (SSO)** by leveraging Cloudflare Zero Trust. 
+While Flight Manual is fully open-source, you can easily deploy it with Single Sign-On (SSO) by leveraging Cloudflare Zero Trust. 
 
-Instead of building a custom Node.js authentication server or paying a managed SaaS platform custom Enterprise pricing, you can configure Cloudflare to protect the `/enterprise/*` directory (or your entire site) out of the box.
+Instead of building a custom Node.js authentication server, you can configure Cloudflare to protect the `/enterprise/*` directory (or your entire site) at the edge.
 
-## Why Cloudflare Access?
+> [!NOTE]
+> **Pricing Reality Check**
+> Cloudflare Zero Trust is **free for up to 50 users**. This is perfect for startups and small teams gating their internal docs. Above 50 users, it becomes a paid Cloudflare product. You pay Cloudflare directly, not us.
 
-Cloudflare Access (part of Cloudflare Zero Trust) acts as a reverse proxy in front of your Flight Manual deployment. It handles the complexities of:
-- **SAML & OIDC:** Natively integrates with Okta, Azure AD, Google Workspace, and Ping Identity.
-- **SCIM Provisioning:** Syncs your user groups and policies.
-- **SOC 2 Compliance:** Security is handled by Cloudflare's edge, not your application code.
+## What Access Does (and Doesn't) Do
 
-## Configuration Steps
+Before rolling this out to your security team, it is important to be precise about what this integration actually provides:
 
-### 1. Deploy Flight Manual to Cloudflare Pages
-Ensure your documentation is deployed to a Cloudflare Pages project. This ensures it sits behind Cloudflare's global edge network.
+* **What it handles:** Edge-level authentication. Cloudflare intercepts the request, redirects to your Identity Provider (IdP), and validates the session before allowing the request to reach the Flight Manual site.
+* **What it DOES NOT handle:** This is not a full Identity Management (IdM) solution. It does not natively provide SCIM provisioning (syncing user deletions), deep enterprise audit logs with custom retention policies, or fine-grained attribute-based RBAC inside the Astro app itself. 
 
-### 2. Set Up Cloudflare Zero Trust
+If you just need to lock a docs page behind Okta, this is the perfect solution. If you need complex IdM features, you need a dedicated enterprise platform.
+
+---
+
+## Configuration Guide
+
+### Step 0: Remove the Demo Middleware
+Flight Manual ships with a demo middleware in `functions/_middleware.ts` that looks for a `?token=secret` parameter. **You must delete this file.** If you leave it, Cloudflare Access will authenticate the user, but the local middleware will still block them because it expects the demo token.
+
+```bash
+rm functions/_middleware.ts
+```
+
+### Step 1: Set Up Cloudflare Zero Trust
 1. Log in to your Cloudflare dashboard and navigate to **Zero Trust**.
-2. Go to **Settings > Authentication > Login methods** and add your Identity Provider (e.g., Okta or Azure AD).
+2. If this is your first time, follow the onboarding flow to choose your "Team Domain" (e.g., `yourcompany.cloudflareaccess.com`).
 
-### 3. Create an Access Application
+### Step 2: Configure your Identity Provider (Okta)
+You must connect Cloudflare to your IdP before creating the application.
+1. In Zero Trust, navigate to **Settings > Authentication > Login methods**.
+2. Click **Add new** and select **Okta**.
+3. You will need to provide your **Okta URL**, **Client ID**, and **Client Secret**. 
+4. In your Okta admin dashboard, create an OIDC Web Application, and set the Sign-in redirect URI to: `https://<your-team-domain>.cloudflareaccess.com/cdn-cgi/access/callback`.
+
+*(For Azure AD or Google Workspace, the flow is nearly identical. Select them from the Login methods list and follow the Cloudflare prompts).*
+
+### Step 3: Create the Access Application
 1. Go to **Access > Applications**.
 2. Click **Add an Application** and select **Self-hosted**.
-3. Set the application name to "Flight Manual Internal Docs".
-4. Set the **Application domain** to your Cloudflare Pages domain (e.g., `docs.yourcompany.com`).
-5. **Path Restriction:** If you only want to protect a specific folder, add `/enterprise/*` to the Path field. If you want to protect the entire site, leave the Path field blank.
+3. **Application Name:** "Flight Manual Internal Docs".
+4. **Application domain:** Select your Cloudflare Pages domain (e.g., `docs.yourcompany.com`).
+5. **Path Restriction:** To protect a specific folder, add `enterprise` to the Path field. To protect the entire site, leave it blank.
 
-### 4. Define Access Policies
-Create a policy to determine who can access the documentation.
-1. **Action:** Allow
-2. **Include:** Select the Identity Provider groups (e.g., Okta group "Engineering") or specify `@yourcompany.com` email addresses.
+### Step 4: Define the Access Policy
+Create a policy to determine exactly who is allowed in.
+1. **Action:** `Allow`
+2. **Assign a Group:** Under the **Include** rule, select **Emails ending in**, and enter `@yourcompany.com`. 
+3. *Optional:* If you configured Okta Groups, you can select **Okta Group** and type "Engineering".
 
-## The Result
+---
 
-When a user attempts to visit `docs.yourcompany.com/enterprise/`, Cloudflare will intercept the request *before* it ever hits the Astro application. The user will be redirected to your Okta login screen. Once authenticated, they will seamlessly access the private documentation. 
+## Enabling AI Agents (Service Tokens)
 
-This requires **zero code changes** to Flight Manual and provides true Enterprise SSO.
+Mintlify and other platforms talk a lot about "AI Agents reading your docs." If you gate your documentation behind Cloudflare Access, AI agents (like your internal Slack bot or a retrieval agent) will hit the SSO login screen and fail to read the content.
+
+You can solve this instantly without building any backend infrastructure using **Cloudflare Service Tokens**.
+
+1. In Zero Trust, go to **Access > Service Auth > Service Tokens**.
+2. Click **Create Service Token**. Name it "Internal Docs Agent".
+3. Cloudflare will generate a **Client ID** and **Client Secret**. Save these immediately.
+4. Go back to your Access Application (**Access > Applications > Flight Manual**).
+5. Add a new Policy. Set the Action to `Bypass`.
+6. Under the **Include** rule, select **Service Token** and choose your "Internal Docs Agent" token.
+
+Now, your AI agent can read the gated documentation by simply passing the headers in its HTTP requests:
+
+```bash
+curl -H "CF-Access-Client-Id: <CLIENT_ID>" \
+     -H "CF-Access-Client-Secret: <CLIENT_SECRET>" \
+     https://docs.yourcompany.com/enterprise/
+```
+
+This puts Flight Manual ahead of most managed documentation platforms for programmatic AI access, entirely using Cloudflare primitives.

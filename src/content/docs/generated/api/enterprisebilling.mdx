@@ -1,0 +1,87 @@
+---
+title: EnterpriseBilling
+description: "API Reference for the EnterpriseBilling object."
+---
+
+import ApiField from '@/components/docs/ApiField.astro';
+import Expandable from '@/components/docs/Expandable.astro';
+
+## Schema Properties
+
+<ApiField name="invoiceId" type="string" required>
+  The unique identifier for the invoice.
+</ApiField>
+
+<ApiField name="status" type=""draft" | "open" | "paid" | "void" | "uncollectible"" required>
+  The current status of the invoice.
+</ApiField>
+
+<ApiField name="totalAmount" type="number" required>
+  Total invoice amount in cents.
+</ApiField>
+
+<ApiField name="currency" type="string" required>
+  Three-letter ISO currency code.
+</ApiField>
+
+<ApiField name="customer" type="object" required>
+  Details about the customer being billed.
+<Expandable title="View Properties">
+<ApiField name="customerId" type="string" required>
+  Stripe customer ID.
+</ApiField>
+
+<ApiField name="billingAddress" type="object" required>
+  The primary billing address for tax purposes.
+<Expandable title="View Properties">
+<ApiField name="line1" type="string" required>
+  Address line 1 (e.g., street, PO Box).
+</ApiField>
+
+<ApiField name="line2" type="string">
+  Address line 2 (e.g., apartment, suite).
+</ApiField>
+
+<ApiField name="city" type="string" required>
+  City, district, suburb, town, or village.
+</ApiField>
+
+<ApiField name="country" type="string" required>
+  Two-letter country code (ISO 3166-1 alpha-2).
+</ApiField>
+
+</Expandable>
+
+</ApiField>
+
+</Expandable>
+
+</ApiField>
+
+<ApiField name="lineItems" type="object[]" required>
+  The individual items or subscriptions included in this invoice.
+<Expandable title="Array Item Properties">
+<ApiField name="itemId" type="string" required>
+  Unique identifier for the line item.
+</ApiField>
+
+<ApiField name="description" type="string" required>
+  A brief description of the product or service.
+</ApiField>
+
+<ApiField name="quantity" type="number" required>
+  The quantity purchased.
+</ApiField>
+
+<ApiField name="unitAmount" type="number" required>
+  Cost per unit in cents.
+</ApiField>
+
+</Expandable>
+
+</ApiField>
+
+<ApiField name="metadata" type="Record<string, string>">
+  Arbitrary key-value metadata attached to the invoice.
+</ApiField>
+
