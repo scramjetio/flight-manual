@@ -17,6 +17,8 @@ hero:
 ---
 
 import { Card, CardGrid, LinkCard, Tabs, TabItem, Code } from '@astrojs/starlight/components';
+import { ScalarComponent } from "@scalar/astro";
+import { ChatWidget } from '../../components/docs/ChatWidget.tsx';
 
 ## Explore the Documentation
 
@@ -69,3 +71,21 @@ Flight Manual gives you premium components like interactive Code Tabs without th
     <Code code={`yarn add @scramjet/flight-manual`} lang="bash" />
   </TabItem>
 </Tabs>
+
+---
+
+## 🕹️ Live API Playground
+
+Test out the interactive API documentation below. Flight Manual uses Scalar to instantly convert your OpenAPI specifications into beautiful, testable interfaces.
+
+<ScalarComponent
+  configuration={{
+    url: "/openapi.json",
+    theme: "purple",
+    layout: "modern",
+    hideModels: false,
+    searchHotKey: "k",
+  }}
+/>
+
+<ChatWidget client:load />
