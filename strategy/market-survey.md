@@ -31,7 +31,8 @@ description: Competitive landscape analysis of documentation engines and platfor
 |------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | MDX/Markdown | ✅ | ✅ | ✅ | Custom | ✅ | WYSIWYG | WYSIWYG | ✅ | N/A |
 | Git-native workflow | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ Sync | ⚠️ | ✅ | ✅ |
-| Visual editor | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Bi-directional Git Web Editor | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Comment/Suggestion Mode | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ⚠️ | ❌ | ❌ |
 | Schema-validated tags | ❌ | ✅ | ✅ | ✅ | ❌ | N/A | N/A | ✅ | N/A |
 | Versioning | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
 | i18n | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
@@ -62,17 +63,19 @@ description: Competitive landscape analysis of documentation engines and platfor
 |------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | Full-text search | ✅ Pagefind | ✅ AI semantic | ✅ AI search | ✅ Algolia | ✅ Algolia | ✅ | ✅ | ✅ | ❌ |
 | AI chat assistant | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Agentic Multi-step RAG | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | `/llms.txt` generation | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| MCP server | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| MCP server auto-gen | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 ### 5. Content Pipeline (Docs-as-Code)
 
 | Capability | FlightManual | Mintlify | Fern | Markdoc | Docusaurus | GitBook | ReadMe | Redocly | Scalar |
 |------------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Auto-gen from source code | ⚠️ MVP | ✅ Autopilot | ✅ From API spec | ❌ | Plugin | ❌ | ❌ | ✅ From spec | ❌ |
-| CI/CD integration | ⚠️ Manual | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ | ❌ |
+| Auto-gen from source code | ✅ Build-time | ✅ Workflows | ✅ API spec | ❌ | Plugin | ❌ | ❌ | ✅ Spec | ❌ |
+| Autonomous Narrative Agent | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| CI/CD integration | ✅ via GHA | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ | ❌ |
+| Preview Deployments per PR| ❌ | ✅ | ✅ | ✅ | ⚠️ | ❌ | ❌ | ✅ | ❌ |
 | Breaking change detection | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
-| Pipeline-driven content | ⚠️ `gather-content` | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 ### 6. Deployment & Performance
 
@@ -133,17 +136,16 @@ description: Competitive landscape analysis of documentation engines and platfor
 
 ## FlightManual Positioning
 
-> **FlightManual occupies a unique position**: it's the only documentation engine that combines self-hosted OSS (free), Cloudflare-native edge deployment, AI-native exports (`llms.txt`), AND an integrated content pipeline (Scramjet).
+> **FlightManual occupies a tactical wedge**: It automates the API reference layer (acting as a Zod-first alternative to Stainless/Speakeasy/Fern) and ships a Cloudflare-native presentation layer. 
 
 ### Where FlightManual Wins
 
 | Advantage | Why It Matters |
 |-----------|---------------|
-| **$0 cost** | Mintlify is $150-500/mo, Fern is $250/mo+. FlightManual is free forever. |
+| **TypeScript Schema Codegen** | Instead of manually managing OpenAPI, your existing Zod schemas automatically generate your documentation at build time. |
+| **$0 cost** | Mintlify is $250+/mo, Fern is $250/mo+. FlightManual is free forever. |
 | **No vendor lock-in** | Plain MDX files in Git. Switch frameworks anytime. |
 | **Cloudflare-native** | 0ms TTFB at 300+ edge locations. No cold starts. |
-| **AI-native from day 1** | `/llms.txt` is built-in, not an afterthought. |
-| **Scramjet pipeline** | Auto-generate docs from source code. No other OSS framework can do this. |
 
 ### Where FlightManual Needs Investment
 
@@ -151,17 +153,15 @@ description: Competitive landscape analysis of documentation engines and platfor
 |-----|-----------|----------|
 | Component library (5 vs 30+) | Mintlify, Fern | P0 |
 | Interactive API playground | Mintlify, Fern, Scalar | P0 |
-| SDK generation | Fern (unique) | P2 (not our lane) |
-| AI chat assistant | Mintlify, GitBook | P1 |
-| Visual editor for non-devs | GitBook, Mintlify | P2 |
+| Bi-directional Git Web Editor | GitBook, Mintlify | P2 (Out of scope) |
+| Autonomous Narrative Workflows| Mintlify | P2 (Out of scope) |
 | Content versioning | Docusaurus, Fern | P1 |
 
 ---
 
 ## Strategic Recommendations
 
-1. **Don't compete on SDK generation** — that's Fern's moat, and it's not relevant to our use case
-2. **Compete on content automation** — "your docs write themselves" is a message no competitor can match
-3. **Compete on cost** — $0 vs $150-500/mo is a real differentiator for indie devs and startups
-4. **Build the component library** — this is table stakes; without `<ApiField>`, `<Schema>`, `<Endpoint>` components, FlightManual feels unfinished
-5. **Ship `npx create-flight-manual`** — one-command setup is the growth vector
+1. **Own the Build-Time Codegen:** The messaging should be "boring, reliable build-time generation." We do not have an autonomous agent; we have CI/CD codegen. Stop trying to pretend we neutralize Mintlify Workflows.
+2. **Accept the Gaps:** We explicitly do not support visual web editing for PMs, or LLM-driven narrative PR drafts. If customers need these, they belong on Mintlify.
+3. **Validate in Production:** The Scramjet pipeline is currently a functional proof-of-concept for Zod schemas. The immediate next step is to validate it against a real-world, complex backend repository to prove it actually produces publishable reference documentation.
+4. **Data Provenance:** Any claims about competitor traffic (e.g., Mintlify's "half of traffic is AI") must be labeled as self-reported marketing, not verified independent facts.

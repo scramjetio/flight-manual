@@ -1,0 +1,42 @@
+---
+title: "Enterprise SSO via Cloudflare Access"
+description: "How to protect your internal documentation using Cloudflare Zero Trust (Access) for Okta/SAML integration."
+---
+
+While Flight Manual is fully open-source, you can easily deploy it with **Enterprise-grade Single Sign-On (SSO)** by leveraging Cloudflare Zero Trust. 
+
+Instead of building a custom Node.js authentication server or paying a managed SaaS platform custom Enterprise pricing, you can configure Cloudflare to protect the `/enterprise/*` directory (or your entire site) out of the box.
+
+## Why Cloudflare Access?
+
+Cloudflare Access (part of Cloudflare Zero Trust) acts as a reverse proxy in front of your Flight Manual deployment. It handles the complexities of:
+- **SAML & OIDC:** Natively integrates with Okta, Azure AD, Google Workspace, and Ping Identity.
+- **SCIM Provisioning:** Syncs your user groups and policies.
+- **SOC 2 Compliance:** Security is handled by Cloudflare's edge, not your application code.
+
+## Configuration Steps
+
+### 1. Deploy Flight Manual to Cloudflare Pages
+Ensure your documentation is deployed to a Cloudflare Pages project. This ensures it sits behind Cloudflare's global edge network.
+
+### 2. Set Up Cloudflare Zero Trust
+1. Log in to your Cloudflare dashboard and navigate to **Zero Trust**.
+2. Go to **Settings > Authentication > Login methods** and add your Identity Provider (e.g., Okta or Azure AD).
+
+### 3. Create an Access Application
+1. Go to **Access > Applications**.
+2. Click **Add an Application** and select **Self-hosted**.
+3. Set the application name to "Flight Manual Internal Docs".
+4. Set the **Application domain** to your Cloudflare Pages domain (e.g., `docs.yourcompany.com`).
+5. **Path Restriction:** If you only want to protect a specific folder, add `/enterprise/*` to the Path field. If you want to protect the entire site, leave the Path field blank.
+
+### 4. Define Access Policies
+Create a policy to determine who can access the documentation.
+1. **Action:** Allow
+2. **Include:** Select the Identity Provider groups (e.g., Okta group "Engineering") or specify `@yourcompany.com` email addresses.
+
+## The Result
+
+When a user attempts to visit `docs.yourcompany.com/enterprise/`, Cloudflare will intercept the request *before* it ever hits the Astro application. The user will be redirected to your Okta login screen. Once authenticated, they will seamlessly access the private documentation. 
+
+This requires **zero code changes** to Flight Manual and provides true Enterprise SSO.

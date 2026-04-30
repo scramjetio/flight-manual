@@ -8,7 +8,7 @@ export const onRequestPost: PagesFunction = async (context) => {
     const latestMessage = body.messages[body.messages.length - 1]?.content;
 
     if (!latestMessage) {
-      return new Response('Message is required', { status: 400 });
+      return new Response(`Message is required. Received payload: ${JSON.stringify(body)}`, { status: 400 });
     }
 
     // In a real cloud environment, we would grab a Durable Object stub

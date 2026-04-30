@@ -14,41 +14,24 @@
   <a href="https://github.com/scramjetio/flight-manual/actions"><img src="https://img.shields.io/github/actions/workflow/status/scramjetio/flight-manual/deploy.yml?style=flat-square" alt="CI Status"></a>
 </div>
 
----
+## What is Flight Manual?
 
-## ⚡️ The Problem
-Existing documentation templates (like vanilla Docusaurus) are painfully basic out-of-the-box, forcing you to spend hundreds of engineering hours building custom React components just to make them look modern. If you don't want to build it yourself, you are forced to pay Managed SaaS platforms $150 to $500 a month to unlock "premium" features like a floating AI chatbot, edge-based Role-Based Access Control (RBAC), and interactive API playgrounds. You are held hostage by vendor lock-in.
+Backend teams using TypeScript schema validation (Zod, etc.) ship API reference docs that regenerate from source on every deploy. Hosted on Cloudflare's free tier, Flight Manual gives you a beautiful, deterministic documentation engine without paying $250/mo to a docs SaaS or maintaining an OpenAPI spec separately from your actual schemas.
 
-## 🌟 The Solution (Flight Manual)
-Flight Manual is an open-source, "Venture-Backed SaaS" grade documentation engine built on top of Astro Starlight. It gives you the legendary aesthetics and powerful features of a $500/month enterprise platform, 100% for free.
+### Core Capabilities
 
-### 💎 The Premium Arsenal (What makes it special)
-You get these features completely out-of-the-box, saving you months of engineering time and thousands of dollars:
-* **The $100/mo Paywall Breaker (Native AI):** A fully integrated, stateful Llama 3 Chatbot powered by `assistant-ui` and Cloudflare Durable Objects. You own the Vectorize database and the compute, paying $0 to third-party wrappers.
-* **Mintlify-Tier DX:** Gorgeous, glassy components featuring deep radial glows, interactive OpenAPI Scalar playgrounds, and beautifully designed `<Endpoint>` and `<ApiField>` primitives out of the box.
-* **Zero-Config Edge RBAC:** Cloudflare Pages Middleware natively locks down private `/enterprise` directories at the edge without needing to build and maintain a custom Node.js authentication server.
-* **No Vendor Lock-in:** The entire site is powered by plain `.mdx` files sitting in your Git repository. You own your data.
+- **TypeScript Schema Codegen:** Parse Zod schemas from your backend and deterministically generate MDX reference documentation at build time. The code is the source of truth; the docs follow automatically.
+- **Interactive API Playground:** Integrated Scalar OpenAPI UI for live endpoint testing.
+- **Agent-Ready Artifacts:** Automatically generates `llms.txt` during the build process so Perplexity, Claude, and internal agents can parse your APIs.
+- **Cost:** $0. Flight Manual is MIT licensed.
 
----
+### What It Doesn't Do
 
-## 🙋 Frequently Asked Questions
+To be transparent, Flight Manual is focused strictly on code-driven API references. It does not include:
+- A bi-directional Git web editor for PMs or technical writers.
+- LLM-driven autonomous agents that draft narrative tutorials from code diffs.
 
-**Is it actually free? What's the catch?**
-There is no catch. Flight Manual is 100% open-source (MIT License). You host it yourself, meaning you never pay a monthly SaaS subscription. If you deploy it to Cloudflare Pages, their free tier handles up to 100,000 requests per day.
-
-**How do I customize the branding to match my startup?**
-The entire Mintlify-tier aesthetic is controlled via CSS variables. Simply open `src/styles/custom.css` and change the `--sl-color-accent` variables. The glowing borders, glassy cards, and radiant background glows will instantly adapt to your brand's colors.
-
-**How does the AI Chatbot work without a $100/mo subscription?**
-Most documentation platforms charge you heavily for AI features. Flight Manual has a native integration with Cloudflare Workers AI and Vectorize. When a user asks a question, a Cloudflare Durable Object spins up a stateful Llama 3 instance to answer them. Cloudflare's free tier provides millions of AI tokens a month for free.
-
-**Can I deploy this anywhere else besides Cloudflare?**
-Yes! Because Flight Manual is built on top of Astro, you can deploy it to Vercel, Netlify, AWS, or any standard Node.js environment. However, deploying to Cloudflare is highly recommended to take advantage of the Edge RBAC middleware and native Workers AI chatbot.
-
-**Why shouldn't I just use Docusaurus or Mintlify?**
-Docusaurus looks extremely basic out-of-the-box and requires thousands of lines of custom React to make it look premium. Mintlify looks gorgeous, but locks you into a proprietary ecosystem and charges $150 to $500+ a month. Flight Manual gives you Mintlify's aesthetics and AI features for $0, while letting you keep your documentation in simple Markdown files.
-
----
+If your documentation is heavily narrative (tutorials, conceptual guides) and maintained by non-engineers, we highly recommend managed solutions like Mintlify. If your docs are predominantly API references managed by backend engineers, Flight Manual automates the drift away.
 
 ## 🎥 In Action
 > **[TODO]:** Insert a 5-second WebP or GIF here showing the UI being interacted with.
