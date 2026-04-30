@@ -7,7 +7,7 @@ import { Card, CardGrid } from "@astrojs/starlight/components";
 
 ## Overview
 
-**docs-starter** is an opinionated documentation toolkit built on battle-tested open-source components. It provides Mintlify-level features at zero cost.
+**FlightManual** is an opinionated, venture-backed documentation toolkit. It provides Mintlify-level features, automated API ingestion, and a stateful AI agent at zero cost.
 
 ## Technology Stack
 
@@ -15,51 +15,52 @@ import { Card, CardGrid } from "@astrojs/starlight/components";
   <Card title="Astro Starlight" icon="astro">
     Static site generator optimized for documentation. Markdown/MDX content, automatic navigation, built-in search.
   </Card>
-  <Card title="Scalar" icon="rocket">
-    Interactive API reference and playground. Renders beautiful, try-it-live API docs from any OpenAPI specification.
-  </Card>
-  <Card title="Pagefind" icon="magnifier">
-    Client-side full-text search. Indexes your content at build time. Zero server infrastructure needed.
-  </Card>
   <Card title="Cloudflare Pages" icon="cloud">
-    Global edge deployment. Free tier includes unlimited bandwidth, custom domains, and preview deployments.
+    Global edge deployment for static UI assets. Provides blazing fast delivery of HTML/CSS.
+  </Card>
+  <Card title="Cloudflare Durable Objects" icon="puzzle">
+    Stateful Cloudflare Workers that persist the AI Agent's chat history directly on the edge.
+  </Card>
+  <Card title="GitHub Actions CI/CD" icon="rocket">
+    Automated ingestion pipeline that pulls schemas from your backend microservices and creates automated Pull Requests.
   </Card>
 </CardGrid>
 
 ## How It Works
 
-```
-┌─────────────────┐     ┌──────────────┐     ┌─────────────────┐
-│   MDX Content   │────▶│  Astro Build │────▶│  Static HTML    │
-│   + OpenAPI     │     │  + Starlight │     │  + Pagefind     │
-│   + CSS         │     │  + llms-txt  │     │  + llms.txt     │
-└─────────────────┘     └──────────────┘     └─────────────────┘
-                                                     │
-                                                     ▼
-                                              ┌─────────────┐
-                                              │  Cloudflare  │
-                                              │    Pages     │
-                                              └─────────────┘
-```
+FlightManual utilizes **Cloudflare Pages**, but it leverages the full power of **Cloudflare Workers**. 
 
-### Build Pipeline
+By placing our server-side logic in the `functions/` directory, Cloudflare automatically compiles those files into a hidden Cloudflare Worker attached to our static site. This allows us to serve static HTML at edge speeds, while running complex backend compute (RBAC and AI) in the exact same repository.
 
-1. **Content** — You write MDX files in `src/content/docs/`
-2. **OpenAPI** — Drop your spec into `public/openapi.json`
-3. **Build** — Astro compiles everything to static HTML
-4. **Search** — Pagefind indexes all pages automatically
-5. **AI-Ready** — `llms-txt` integration generates `/llms.txt` and `/llms-full.txt`
-6. **Deploy** — Push to GitHub → Cloudflare Pages auto-deploys
+```mermaid
+graph TD
+    subgraph GitHub
+        A[Backend Repos] -->|GitHub Actions| B(FlightManual Repo)
+        B -->|Auto-PR| C{Docs Updated}
+    end
+
+    subgraph Cloudflare Pages
+        C -->|Deploy| D[Astro Static Site]
+        D -->|/enterprise| E[Edge Middleware RBAC]
+        D -->|/api/chat| F[Edge Agent Router]
+    end
+
+    subgraph Cloudflare Workers
+        F <--> G[(Durable Object: DocsAgent)]
+        G <--> H[Workers AI: Llama 3]
+        G <--> I[(Vectorize DB)]
+    end
+```
 
 ### Feature Architecture
 
 | Feature | Component | How It Works |
 |---|---|---|
-| Search | Pagefind | Client-side index built at compile time |
-| API Playground | Scalar | React component embedded in MDX |
-| AI Readability | llms-txt integration | Post-build hook generates markdown files |
-| Analytics | CF Web Analytics | Script tag injected via Astro integration |
-| Styling | Custom CSS + Inter font | CSS variables for easy brand customization |
+| Auto-Ingestion | GitHub Actions | `docs-sync.yml` clones backend repos and extracts Markdown/Zod schemas. |
+| AI Chatbot | `assistant-ui` + Durable Objects | Vercel AI SDK streams Llama 3 responses from a stateful Cloudflare Worker. |
+| Edge Security | Cloudflare Middleware | `_middleware.ts` intercepts requests to `/enterprise/` and enforces RBAC tokens. |
+| API Playground | Scalar | React component embedded in MDX to test endpoints live. |
+| AI Readability | llms-txt integration | Post-build hook generates markdown files optimized for LLM scrapers. |
 
 ## Extending
 
