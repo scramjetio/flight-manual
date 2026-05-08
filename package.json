@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "test:links": "linkinator ./dist --skip 'docs.cloudstart.dev' --skip 'github.com'",
-    "embed": "node scripts/embed-docs.mjs"
+    "embed": "node scripts/embed-docs.mjs",
+    "format": "biome format --write ."
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.172",
@@ -45,10 +46,12 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.14",
     "@cloudflare/workers-types": "^4.20260429.1",
     "broken-link-checker": "^0.7.8",
     "linkinator": "^7.6.1",
     "typescript": "^6.0.3",
     "wrangler": "^4.86.0"
-  }
+  },
+  "packageManager": "pnpm@9.0.0"
 }

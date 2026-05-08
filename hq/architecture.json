@@ -1,0 +1,105 @@
+{
+  "core_purpose": "Flight Manual is an open-source, code-driven API documentation engine built on Astro Starlight and Cloudflare Pages, positioned as a free alternative to Mintlify. It deterministically generates MDX reference docs from TypeScript Zod schemas, ships an interactive Scalar API playground, an llms.txt build artifact, and an auto-generated MCP server.",
+  "status": "Prototype",
+  "architecture": {
+    "frontend": "Astro (Starlight) + React 19",
+    "backend": "Cloudflare Pages Functions + Workers (Durable Objects)",
+    "database": "Cloudflare Vectorize"
+  },
+  "main_features": [
+    {
+      "name": "Astro Starlight Documentation Site",
+      "status": "Operational",
+      "files_involved": [
+        "astro.config.mjs",
+        "src/content/docs/index.mdx",
+        "src/content.config.ts"
+      ]
+    },
+    {
+      "name": "Zod Schema → MDX API Reference Codegen",
+      "status": "Operational",
+      "files_involved": [
+        "src/backend/schemas.mjs",
+        "src/content/docs/generated",
+        "scripts/gather-content.mjs"
+      ]
+    },
+    {
+      "name": "Scalar OpenAPI Interactive Playground",
+      "status": "Operational",
+      "files_involved": [
+        "src/content/docs/api-reference.mdx",
+        "package.json"
+      ]
+    },
+    {
+      "name": "llms.txt / llms-full.txt Build Integration",
+      "status": "Operational",
+      "files_involved": [
+        "integrations/llms-txt.js",
+        "astro.config.mjs"
+      ]
+    },
+    {
+      "name": "Auto-Generated MCP Server (Zod → MCP Tools)",
+      "status": "Operational",
+      "files_involved": [
+        "scripts/generate-mcp.mjs",
+        "src/generated/mcp-server/server.mjs"
+      ]
+    },
+    {
+      "name": "i18n (English + Spanish) and Doc Versioning",
+      "status": "Operational",
+      "files_involved": [
+        "astro.config.mjs",
+        "src/content/docs/v1.0",
+        "src/content/docs/versions"
+      ]
+    },
+    {
+      "name": "Vectorize Embedding Pipeline",
+      "status": "Operational",
+      "files_involved": [
+        "scripts/embed-docs.mjs",
+        "package.json"
+      ]
+    },
+    {
+      "name": "Stateful AI Chat Agent (Durable Object + Workers AI)",
+      "status": "Stubbed",
+      "files_involved": [
+        "functions/agent.ts",
+        "functions/api/chat.ts",
+        "src/components/assistant-ui"
+      ]
+    },
+    {
+      "name": "Enterprise RBAC Edge Middleware",
+      "status": "Stubbed",
+      "files_involved": [
+        "functions/_middleware.ts"
+      ]
+    },
+    {
+      "name": "Feedback API Endpoint",
+      "status": "Operational",
+      "files_involved": [
+        "functions/api/feedback.ts"
+      ]
+    },
+    {
+      "name": "Cloudflare Web Analytics Integration",
+      "status": "Operational",
+      "files_involved": [
+        "integrations/analytics.js",
+        "astro.config.mjs"
+      ]
+    }
+  ],
+  "technical_debt": "No automated test suite exists (only a linkinator link-checker script). The /api/chat handler returns a hardcoded simulated stream and the production Durable Object path is commented-out scaffolding (functions/api/chat.ts:14-21). functions/agent.ts contains an explicit TODO for stream consumption/state persistence and falls back to mocked responses when the AI binding is missing. Enterprise RBAC middleware accepts a literal '?token=secret' query string and a static 'FM_ENTERPRISE_TOKEN=authorized' cookie — placeholder auth, not production. Repository state is messy: a stale astro.config.mjs.bak, a committed _worker.bundle artifact at repo root, package-lock.json deleted while pnpm-lock.yaml is added (uncommitted, mixed package-manager signal), and broken-link-checker is declared in devDependencies but never invoked. README still contains a literal '[TODO]' placeholder for the demo GIF, and wrangler.jsonc is absent despite Cloudflare Workers/DO usage (no bindings config in repo).",
+  "active_roadmap": [
+    "No open GitHub issues — no externally tracked roadmap. Implicit next steps inferred from in-code TODOs: wire the DocsAgent Durable Object binding and finish the streaming/storage path in functions/agent.ts; replace the demo token-based RBAC in functions/_middleware.ts with real auth; add a wrangler.jsonc with Vectorize, AI, and DO bindings; introduce a test suite."
+  ]
+}
