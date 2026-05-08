@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.14",
-    "@cloudflare/workers-types": "^4.20260429.1",
+    "@cloudflare/workers-types": "^4.20260508.1",
     "broken-link-checker": "^0.7.8",
     "linkinator": "^7.6.1",
     "typescript": "^6.0.3",
