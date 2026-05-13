@@ -26,7 +26,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "agents": "^0.11.9",
-    "ai": "^6.0.170",
+    "ai": "^6.0.182",
     "astro": "^6.1.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
