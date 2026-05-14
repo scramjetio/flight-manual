@@ -1,7 +1,7 @@
 {
   "name": "flight-manual",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "wrangler pages dev --proxy 4321 -- astro dev --port 4321",
     "start": "astro dev",
