@@ -1,3 +1,10 @@
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Astro-6.3-FF5D01?style=flat-square&logo=astro&logoColor=white" alt="Astro">
+  <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/Deploy-Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare Pages">
+</div>
+
 <!-- The Visual Hook -->
 <div align="center">
   <img src=".github/assets/flight-manual-cockpit.png" alt="Flight Manual Hero Image" width="800">
